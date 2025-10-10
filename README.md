@@ -5,7 +5,7 @@
 Во время работы можно поставить на паузу.
 Есть быстрый поиск по результатам.
 
-<img width="600" height="auto" alt="glossary1" src="https://github.com/user-attachments/assets/e6f225bd-9e2c-4528-ab1f-00f4adcc9f7a" />
+<img width="600" height="auto" alt="glossary1" src="https://github.com/user-attachments/assets/e6f225bd-9e2c-4528-ab1f-00f4adcc9f7a" /></br>
 
 <img width="400" height="auto" alt="glossary2" src="https://github.com/user-attachments/assets/075024ea-14f9-4bb6-a599-d4fd24cf7569" />
 
