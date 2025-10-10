@@ -5,9 +5,14 @@
 Во время работы можно поставить на паузу.
 Есть быстрый поиск по результатам.
 
+<img width="1033" height="242" alt="glossary1" src="https://github.com/user-attachments/assets/e6f225bd-9e2c-4528-ab1f-00f4adcc9f7a" />
+<img width="830" height="1553" alt="glossary2" src="https://github.com/user-attachments/assets/075024ea-14f9-4bb6-a599-d4fd24cf7569" />
+
 По желанию - выгружает в отдельную заметку-сохранёнку (всегда одну и ту же, т.е. содержимое будет переписываться).
 Разбивает на заголовки по алфавиту.
 Можно настроить выгрузку столбцами в количестве от 1 до 10. Синтаксис столбцов - плагин [Horizontal Blocks](https://github.com/iCodeAlchemy/horizontal-blocks). Список будет скомпонован на экране слева направо, а затем сверху вниз, как на бумажной странице. Не совсем привычно, но удобно.
+
+<img width="1409" height="798" alt="glossary3" src="https://github.com/user-attachments/assets/7719b6ec-71f0-4528-a477-9dd5825cd054" />
 
 Каталог выгрузки, названия, заголовки и подсказки можно перенастроить под себя в коде.
 
