@@ -5,8 +5,8 @@
 Во время работы можно поставить на паузу.
 Есть быстрый поиск по результатам.
 
-<img width="1033" height="242" alt="glossary1" src="https://github.com/user-attachments/assets/e6f225bd-9e2c-4528-ab1f-00f4adcc9f7a" />
-<img width="830" height="1553" alt="glossary2" src="https://github.com/user-attachments/assets/075024ea-14f9-4bb6-a599-d4fd24cf7569" />
+<img width="600" height="auto" alt="glossary1" src="https://github.com/user-attachments/assets/e6f225bd-9e2c-4528-ab1f-00f4adcc9f7a" />
+<img width="400" height="auto" alt="glossary2" src="https://github.com/user-attachments/assets/075024ea-14f9-4bb6-a599-d4fd24cf7569" />
 
 По желанию - выгружает в отдельную заметку-сохранёнку (всегда одну и ту же, т.е. содержимое будет переписываться).
 Разбивает на заголовки по алфавиту.
