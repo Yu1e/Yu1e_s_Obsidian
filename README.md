@@ -13,7 +13,7 @@
 Разбивает на заголовки по алфавиту.
 Можно настроить выгрузку столбцами в количестве от 1 до 10. Синтаксис столбцов - плагин [Horizontal Blocks](https://github.com/iCodeAlchemy/horizontal-blocks). Список будет скомпонован на экране слева направо, а затем сверху вниз, как на бумажной странице. Не совсем привычно, но удобно.
 
-<img width="1409" height="798" alt="glossary3" src="https://github.com/user-attachments/assets/7719b6ec-71f0-4528-a477-9dd5825cd054" />
+<img width="900" height="798" alt="glossary3" src="https://github.com/user-attachments/assets/7719b6ec-71f0-4528-a477-9dd5825cd054" />
 
 Каталог выгрузки, названия, заголовки и подсказки можно перенастроить под себя в коде.
 
