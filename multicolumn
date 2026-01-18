@@ -17,15 +17,17 @@
 // 1. Select text → run template → confirm → choose columns
 // 2. Run template → paste text in dialog → choose columns
 // 3. Select existing ```hblock``` → run template → re-format
+
+// ═══════════════════════════════════════════════════════════════
+// RU
+// Этот шаблон в связке с плагином Horizontal blocks позволяет динамически формировать и затем редактировать (!) многоколонный текст. Чат: https://lmarena.ai/c/019bd325-9f39-77da-aead-d9f8ddd3eb48 ранее https://www.perplexity.ai/search/v-chate-https-www-perplexity-a-dpRR0Za8Q2aFAJT4QdpLcQ)
+// Варианты использования: 1. Выделить текст в заметке → ВСТАВИТЬ шаблон → после выбора кол-ва колонок и подтверждения текст преобразован. 2. Заранее вырезать текст, ВСТАВИТЬ шаблон, вставить текст в диалоговое окно, выбрать кол-во колонок. 3. В дальнейшем можно редактировать и уже готовые колонки, чтобы поменять их параметры и скорректировать распределение текста.
 //
 // SETTINGS:
 // • ADD_HEADERS: true = add "### Block N" headers
 // • BLOCK_TYPE: "hblock" or "horizontal"
 // • LINE_WEIGHT: line break weight for balancing (default: 30)
-// ═══════════════════════════════════════════════════════════════
-// RU
-// Этот шаблон в связке с плагином Horizontal blocks позволяет динамически формировать и затем редактировать (!) многоколонный текст. Чат: https://lmarena.ai/c/019bd325-9f39-77da-aead-d9f8ddd3eb48 ранее https://www.perplexity.ai/search/v-chate-https-www-perplexity-a-dpRR0Za8Q2aFAJT4QdpLcQ)
-// Варианты использования: 1. Выделить текст в заметке → ВСТАВИТЬ шаблон → после выбора кол-ва колонок и подтверждения текст преобразован. 2. Заранее вырезать текст, ВСТАВИТЬ шаблон, вставить текст в диалоговое окно, выбрать кол-во колонок. 3. В дальнейшем можно редактировать и уже готовые колонки, чтобы поменять их параметры и скорректировать распределение текста.
+
 const ADD_HEADERS = false;
 const BLOCK_TYPE = "hblock";
 const LINE_WEIGHT = 30;
