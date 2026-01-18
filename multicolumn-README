@@ -1,0 +1,205 @@
+# Horizontal Blocks Templater Template
+
+A [Templater](https://github.com/SilentVoid13/Templater) template for [Obsidian](https://obsidian.md/) that converts text into horizontal columns using the [Horizontal Blocks](https://github.com/coddingtonbear/obsidian-horizontal-blocks) plugin syntax. Attention! Fully created by AI  Claude.
+
+## ✨ Features
+
+| Feature | Description |
+|---------|-------------|
+| **Multiple input methods** | Works with selected text, clipboard paste, or existing blocks |
+| **Smart balancing** | Distributes content by visual weight, not just paragraph count |
+| **Order preservation** | Never rearranges your paragraphs |
+| **Re-formatting** | Edit existing column layouts without starting over |
+| **Flexible output** | Supports 2–5 columns with optional headers |
+
+## 📦 Requirements
+
+- [Obsidian](https://obsidian.md/) v1.0+
+- [Templater](https://github.com/SilentVoid13/Templater) plugin
+- [Horizontal Blocks](https://github.com/coddingtonbear/obsidian-horizontal-blocks) plugin
+
+## 🚀 Installation
+
+1. Download `multicolumn.md` from this repository
+2. Place it in your Templater templates folder
+3. Reload Obsidian or restart Templater
+4. (Optional) Assign a hotkey for quick access
+
+## 📖 Usage
+
+### Method 1: Convert Selected Text
+
+1. Select the text you want to convert
+2. Insert multicolumn template (via command palette or hotkey)
+3. Confirm the conversion
+4. Choose the number of columns (2–5)
+5. Done! Your text is now in horizontal blocks
+
+### Method 2: Paste via Dialog
+
+1. Copy text to clipboard (or have it ready)
+2. Run the template without selecting anything
+3. Paste your text into the dialog
+4. Choose the number of columns
+5. The formatted block appears at cursor position
+
+### Method 3: Re-format Existing Blocks
+
+1. Select an existing ` ```hblock``` ` or ` ```horizontal``` ` block
+2. Run the template
+3. Confirm re-formatting
+4. Choose new column count
+5. Content is redistributed into the new layout
+
+## ⚙️ Configuration
+
+Edit these constants at the top of the template:
+
+```javascript
+const ADD_HEADERS = false;    // true = add "### Block N" to each column
+const BLOCK_TYPE = "hblock";  // "hblock" or "horizontal"
+const LINE_WEIGHT = 30;       // weight factor for line breaks (see below)
+Understanding LINE_WEIGHT
+The balancing algorithm calculates "visual weight" for each paragraph:
+
+text
+
+weight = character_count + (line_count - 1) × LINE_WEIGHT
+Higher values → line breaks count more → better for narrow columns
+Lower values → character count dominates → better for wide columns
+Default (30) works well for most layouts
+🧮 Balancing Algorithm
+The template uses an optimal breakpoint algorithm that:
+
+Calculates cumulative weight for all paragraphs
+Finds ideal split points based on target weight per column
+Selects actual breakpoints closest to ideal positions
+Guarantees at least one paragraph per column
+Example
+text
+
+Input: 6 paragraphs with weights [100, 300, 50, 150, 200, 100]
+Total weight: 900
+Target per column (3 cols): 300
+
+Cumulative: [100, 400, 450, 600, 800, 900]
+                   ↑              ↑
+Ideal points:     300            600
+
+Result:
+  Column 1: [1, 2]      weight: 400
+  Column 2: [3, 4]      weight: 200  
+  Column 3: [5, 6]      weight: 300
+Key guarantee: Paragraph order is ALWAYS preserved. The algorithm only decides where to split, never reorders content.
+
+📝 Output Format
+The template generates standard Horizontal Blocks syntax:
+
+Markdown
+
+```hblock
+Content of column 1
+
+Paragraph 2 of column 1
+
+---
+
+Content of column 2
+
+---
+
+Content of column 3
+```
+With ADD_HEADERS = true:
+
+Markdown
+
+```hblock
+### Block 1
+Content of column 1
+
+---
+
+### Block 2
+Content of column 2
+
+---
+
+### Block 3
+Content of column 3
+```
+🔄 Workflow Examples
+Creating a Multi-Column Note
+Markdown
+
+# My Note
+
+Regular paragraph here.
+
+[Select this text and run template ↓]
+
+Point one about topic A
+
+Point two about topic B  
+
+Point three about topic C
+
+Point four about topic D
+
+[Result ↓]
+
+```hblock
+Point one about topic A
+
+Point two about topic B
+
+---
+
+Point three about topic C
+
+Point four about topic D
+More regular text continues here.
+
+text
+
+
+### Changing Column Count
+
+Have a 2-column block but want 3 columns?
+
+1. Select the entire ` ```hblock...``` ` block
+2. Run the template
+3. Choose "3 columns"
+4. Done — content is automatically redistributed
+
+## ❓ FAQ
+
+**Q: What if I have fewer paragraphs than columns?**  
+A: Each paragraph becomes its own column. Extra columns are skipped.
+
+**Q: Does it work with lists and other markdown?**  
+A: Yes! The template preserves all markdown formatting within paragraphs.
+
+**Q: Can I use this with other column plugins?**  
+A: The output is specifically for Horizontal Blocks. Modify `BLOCK_TYPE` if your plugin uses different syntax.
+
+**Q: Why use weight-based balancing?**  
+A: Simple paragraph counting creates uneven columns when paragraph lengths vary. Weight-based balancing produces visually balanced results.
+
+## 🐛 Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| Template does nothing | Check Templater is enabled and template path is correct |
+| Columns look uneven | Adjust `LINE_WEIGHT` for your column width |
+| Dialog doesn't appear | Ensure nothing is selected when using paste method |
+| Existing block not recognized | Make sure the entire ` ```hblock...``` ` is selected |
+
+## 📄 License
+
+MIT License — feel free to modify and share!
+
+## 🙏 Credits
+
+- [Horizontal Blocks plugin](https://github.com/coddingtonbear/obsidian-horizontal-blocks) by coddingtonbear
+- [Templater plugin](https://github.com/SilentVoid13/Templater) by SilentVoid13
