@@ -1,6 +1,9 @@
 <%*
+// Шаблон переименовывает заметку по первым 10 словам (50 символов) или по выделенному фрагменту текста. 
+// Также применяет шаблон ямл (проверка и добавление шапки). Если в название попадает URL, поправишь вручную.
+// https://lmarena.ai/c/141f99b7-e9d8-4067-9e59-84c70b28380c
+// https://www.perplexity.ai/search/etot-shablon-pri-primenenii-in-vr6gxJvZS_GOILUrmKwlqw
 
-// Шаблон переименовывает заметку по первым 10 словам (50 символов) или по выделенному фрагменту текста. Также применяет шаблон ямл (проверка и добавление шапки). Если в название попадает URL, поправишь вручную. https://lmarena.ai/c/141f99b7-e9d8-4067-9e59-84c70b28380c
 tR = "";
 
 async function smartRename() {
@@ -19,24 +22,23 @@ async function smartRename() {
       return;
     }
 
-    // Читаем содержимое файла
-    let content = await app.vault.read(file);
-    
-    // Применяем шаблон yaml.md для работы с frontmatter
-    await tp.file.include("[[yaml]]");
-    
-    // Читаем содержимое файла (уже с обновлённым frontmatter)
-    content = await app.vault.read(file);
-
-    // Проверяем выделенный текст
+    // 1️⃣ СНАЧАЛА сохраняем выделенный текст (пока редактор не тронут)
+    // Это предотвращает потерю выделения при применении YAML
     const editor = app.workspace.activeLeaf?.view?.editor;
     let selectedText = "";
     if (editor && editor.somethingSelected()) {
       selectedText = editor.getSelection();
-      const cursor = editor.getCursor();
-      editor.setCursor(cursor);
     }
 
+    // 2️⃣ Применяем шаблон yaml.md
+    await tp.file.include("[[yaml]]");
+
+    // 3️⃣ Читаем обновленное содержимое файла
+    let content = await app.vault.read(file);
+
+    // --- Очистка контента для генерации имени ---
+    
+    // Удаляем frontmatter
     if (content.startsWith("---")) {
       const fmEnd = content.indexOf("\n---", 3);
       if (fmEnd !== -1) {
@@ -44,6 +46,16 @@ async function smartRename() {
       }
     }
 
+    // Удаляем выноски
+    const lines = content.split('\n');
+    const filteredLines = lines.filter(line => !line.trim().startsWith('> [!'));
+    content = filteredLines.join('\n').trim();
+
+    // Удаляем теги
+    content = content.replace(/#[а-яА-ЯёЁa-zA-Z0-9_\-]+/g, '');
+    content = content.replace(/\s+/g, ' ').trim();
+
+    // Базовое имя из контента
     let name = "";
     if (selectedText) {
       name = selectedText;
@@ -57,41 +69,61 @@ async function smartRename() {
       }
     }
 
-    // Регулярные выражения
-    // Заменяем URL на домен, но сохраняем остальной текст
-name = name.replace(/https?:\/\/(?:www\.)?([^\.\/\s]+)\.([^\.\/\s]+)(?:[\/\?\#][^\s]*)?/g, "$1_$2");
-    // Удаляем из имени все квадратные скобки с одним любым символом внутри
-name = name.replace(/```math[^]{1}/g, "");
-// заменяем все ? на 7
-name = name.replace(/\?/g, "7");
-// Удаляем буллеты и дефисы в начале строки (и пробелы после них)
-name = name.replace(/^(\s*[-*•‣▪–—·●○⁃∙‧﹒﹣－‒–—―]+\s*)/, "");
-// Удаляем все символы, кроме разрешенных (включая подчеркивания):
-name = name.replace(/[^а-яА-ЯёЁa-zA-Z0-9-\s_]/g, '');
-// Заменяем несколько пробелов подряд на один
-name = name.replace(/\s+/g, ' ');
-name = name.replace(/ /g, '_');
-name = name.replace(/-+/g, '-');
-name = name.replace(/_+/g, '_');
-name = name.trim().replace(/^[-_]+|[-_]+$/g, '').trim();
+    // --- Логика переименования ---
+    const currentName = file.basename;
+    
+    // Условие: Если выделения НЕТ И текущее имя "осмысленное" (не дата, не untitled, не одни цифры/символы)
+    if (!selectedText && currentName && 
+        !currentName.startsWith("Untitled") && 
+        !currentName.startsWith("Без названия") &&
+        !currentName.startsWith("Clipboard") &&
+        !/^\d{4}-\d{2}-\d{2}/.test(currentName) &&
+        !/^[\d\s_\-]+$/.test(currentName) && // Твоё условие: если только цифры/пробелы/тире - считаем имя плохим
+        currentName.length > 3) {
+      
+      // Берем текущее имя, сокращаем до 10 слов
+      const words = currentName.split(/\s+/);
+      const limitedWords = words.slice(0, 10);
+      name = limitedWords.join(' ').replace(/\s+/g, '_');
+      
+      // Чистим
+      name = name.replace(/[^а-яА-ЯёЁa-zA-Z0-9\-\s_]/g, '');
+      name = name.replace(/_+/g, '_');
+      name = name.trim().replace(/^[\-_]+|[\-_]+$/g, '').trim();
+      
+    } else {
+      // ИНАЧЕ (есть выделение ИЛИ имя плохое) -> формируем новое имя
+      
+      if (!selectedText) {
+        // Если выделения нет, чистим имя, полученное из контента
+        name = name.replace(/https?:\/\/(?:www\.)?([^\.\/\s]+)\.([^\.\/\s]+)(?:[\/\?\#][^\s]*)?/g, "$1_$2");
+        name = name.replace(/\?/g, "7");
+        // Удаляем буллеты (экранировано)
+        name = name.replace(/^[\s\-\*•‣▪●○⁃∙‧]+\s*/g, "");
+      }
 
-// Первую букву делаем прописной
-if (name.length > 0) {
-  name = name.charAt(0).toUpperCase() + name.slice(1);
-}
+      // Общая чистка для имен из контента или выделения
+      name = name.replace(/[^а-яА-ЯёЁa-zA-Z0-9\-\s_]/g, '');
+      name = name.replace(/\s+/g, ' ');
+      name = name.replace(/ /g, '_');
+      name = name.replace(/\-+/g, '-');
+      name = name.replace(/_+/g, '_');
+      name = name.trim().replace(/^[\-_]+|[\-_]+$/g, '').trim();
 
-// Блок удаления коротких слов в конце имени
-let nameParts = name.split('_');
-while (nameParts.length > 1 && nameParts[nameParts.length - 1].length <= 2 && !/^\d+$/.test(nameParts[nameParts.length - 1])) {
-  nameParts.pop();
-}
-name = nameParts.join('_');
-    {
-      nameParts.pop();
+      // Первая буква заглавная
+      if (name.length > 0) {
+        name = name.charAt(0).toUpperCase() + name.slice(1);
+      }
+
+      // Удаляем короткие хвостики
+      let nameParts = name.split('_');
+      while (nameParts.length > 0 && nameParts[nameParts.length - 1].length <= 2 && !/^\d+$/.test(nameParts[nameParts.length - 1])) {
+        nameParts.pop();
+      }
+      name = nameParts.join('_');
     }
-    name = nameParts.join('_');
 
-    if (name.length < 3) {
+    if (name.length < 2) {
       new Notice("❌ Слишком короткое имя", 3000);
       return;
     }
@@ -104,7 +136,7 @@ name = nameParts.join('_');
     const newPath = file.parent ? `${file.parent.path}/${name}.md` : `${name}.md`;
     const exists = app.vault.getAbstractFileByPath(newPath);
     if (exists) {
-      new Notice(`⚠️ Файл "${name}.md" уже существует!`, 3000);
+      new Notice(`⚠️ Другой файл с именем "${name}.md" уже существует!`, 3000);
       return;
     }
 
@@ -117,4 +149,4 @@ name = nameParts.join('_');
   }
 }
 await smartRename();
-%>
+-%>
