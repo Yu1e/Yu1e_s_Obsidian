@@ -1,0 +1,278 @@
+// Выводит случайную заметку с настройкой периодичности, веса папок, тегов, с исключением папок и тегов.
+const currentFile = dv.current().file.path
+const excludeFolders = ["Serv/", ".trash/"]
+const preferredFolders = ["_Ннзи_Материалы/", "Накопитель/", "Непонятное_пока/", "Цитации/", "ЧБС_и_ЗЗМ/", "Слова_Дней/"] // Папки, из которых заметки будут показываться чаще
+const preferredWeight = 5 // Насколько чаще показывать заметки из предпочитаемых папок (в 5 раз)
+const TWO_HOURS_MS = 2 * 60 * 60 * 1000 // 2 часа в миллисекундах
+
+// Теги предпочтения и исключения
+const preferredTags = ["#всплывашка", "#анки"] // Теги, повышающие приоритет
+const excludedTags = ["#сглаздолой"] // Теги для исключения заметок
+const tagPreferredWeight = 6 // Фиксированный вес за наличие любого предпочитаемого тега
+
+// Функция для генерации уникального ID для этой заметки
+const getStorageKey = () => `random-note-${currentFile.replace(/[^a-z0-9]/gi, '-')}`
+
+// Получаем сохраненное время последнего обновления
+const storageKey = getStorageKey()
+const lastUpdate = window.localStorage.getItem(storageKey) 
+  ? parseInt(window.localStorage.getItem(storageKey))
+  : 0
+
+// Проверяем, нужно ли обновить (если прошло больше 2 часов)
+const currentTime = Date.now()
+const shouldUpdate = currentTime - lastUpdate > TWO_HOURS_MS
+
+// Функция для извлечения тегов из содержимого заметки
+function getFileTags(content) {
+  const tagRegex = /#[a-zA-Z0-9_-]+/g
+  return content.match(tagRegex) || []
+}
+
+// Проверка наличия любого из указанных тегов
+function hasAnyTag(tags, tagList) {
+  return tagList.some(tag => tags.includes(tag))
+}
+
+// Получаем список ВСЕХ файлов (без предварительной фильтрации по папкам)
+const allFiles = dv.app.vault.getMarkdownFiles()
+  .filter(f => f.path !== currentFile) // Исключаем только текущий файл
+
+// Фильтруем файлы и определяем их веса с учетом правил приоритета
+const weightedFiles = []
+for (const file of allFiles) {
+  // Читаем содержимое файла один раз
+  const content = await dv.app.vault.read(file)
+  const fileTags = getFileTags(content)
+  
+  // Правило 1: Если есть тег-исключение, заметка исключается независимо от папки
+  if (hasAnyTag(fileTags, excludedTags)) {
+    continue
+  }
+  
+  // Правило 2: Проверяем, находится ли файл в папке-исключении
+  const isInExcludedFolder = excludeFolders.some(folder => file.path.startsWith(folder))
+  
+  // Правило 3: Если файл в папке-исключении, но нет предпочитаемого тега, пропускаем
+  if (isInExcludedFolder && !hasAnyTag(fileTags, preferredTags)) {
+    continue
+  }
+  
+  // Определяем базовый вес файла
+  let weight = 1
+  
+  // Если файл из предпочитаемой папки, увеличиваем вес
+  if (preferredFolders.some(folder => file.path.startsWith(folder))) {
+    weight *= preferredWeight
+  }
+  
+  // Добавляем фиксированный вес за наличие любого предпочитаемого тега
+  const hasPreferredTag = hasAnyTag(fileTags, preferredTags)
+  if (hasPreferredTag) {
+    weight += tagPreferredWeight
+  }
+  
+  // Определяем, является ли файл предпочитаемым (для визуального отображения)
+  const isPreferred = 
+    preferredFolders.some(folder => file.path.startsWith(folder)) || 
+    hasPreferredTag
+  
+  // Добавляем файл и его вес в список
+  weightedFiles.push({
+    file: file,
+    content: content,
+    weight: weight,
+    isPreferred: isPreferred
+  })
+}
+
+// Используем сохраненный файл или выбираем новый
+let randomFile
+let randomContent
+
+if (shouldUpdate || !window.localStorage.getItem(`${storageKey}-path`)) {
+  // Выбираем новый файл с учетом весов
+  if (weightedFiles.length > 0) {
+    const totalWeight = weightedFiles.reduce((sum, item) => sum + item.weight, 0)
+    const randomValue = Math.random() * totalWeight
+    let accumulatedWeight = 0
+    
+    for (const item of weightedFiles) {
+      accumulatedWeight += item.weight
+      if (randomValue <= accumulatedWeight) {
+        randomFile = item.file
+        randomContent = item.content
+        window.localStorage.setItem(`${storageKey}-preferred`, item.isPreferred.toString())
+        break
+      }
+    }
+    
+    // Если ничего не выбрано, берем первый файл
+    if (!randomFile && weightedFiles.length > 0) {
+      randomFile = weightedFiles[0].file
+      randomContent = weightedFiles[0].content
+      window.localStorage.setItem(`${storageKey}-preferred`, weightedFiles[0].isPreferred.toString())
+    }
+    
+    if (randomFile) {
+      window.localStorage.setItem(`${storageKey}-path`, randomFile.path)
+      window.localStorage.setItem(storageKey, currentTime.toString())
+    }
+  }
+} else {
+  // Используем сохраненный файл
+  const savedPath = window.localStorage.getItem(`${storageKey}-path`)
+  const fileItem = weightedFiles.find(item => item.file.path === savedPath)
+  
+  if (fileItem) {
+    randomFile = fileItem.file
+    randomContent = fileItem.content
+  } else if (weightedFiles.length > 0) {
+    // Выбираем новый файл по тому же алгоритму
+    const totalWeight = weightedFiles.reduce((sum, item) => sum + item.weight, 0)
+    const randomValue = Math.random() * totalWeight
+    let accumulatedWeight = 0
+    
+    for (const item of weightedFiles) {
+      accumulatedWeight += item.weight
+      if (randomValue <= accumulatedWeight) {
+        randomFile = item.file
+        randomContent = item.content
+        window.localStorage.setItem(`${storageKey}-preferred`, item.isPreferred.toString())
+        break
+      }
+    }
+    
+    if (!randomFile && weightedFiles.length > 0) {
+      randomFile = weightedFiles[0].file
+      randomContent = weightedFiles[0].content
+      window.localStorage.setItem(`${storageKey}-preferred`, weightedFiles[0].isPreferred.toString())
+    }
+    
+    if (randomFile) {
+      window.localStorage.setItem(`${storageKey}-path`, randomFile.path)
+      window.localStorage.setItem(storageKey, currentTime.toString())
+    }
+  }
+}
+
+// Проверяем, что мы нашли файл
+if (!randomFile) {
+  dv.paragraph("*Нет доступных заметок, соответствующих критериям*")
+} else {
+  // Заменяем подчеркивания на пробелы для отображения
+  const displayName = randomFile.basename.replace(/_/g, ' ')
+  
+  // Проверяем, является ли файл предпочитаемым
+  const isPreferred = window.localStorage.getItem(`${storageKey}-preferred`) === "true"
+  
+  // Общий стиль для панелей
+  const panelStyle = `
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    height: 42px; /* Фиксированная высота для обеих панелей */
+  `
+  
+  // Создаем первую градиентную полосу с кнопками
+  const buttonsPanel = dv.container.createEl("div", {
+    attr: { 
+      style: `
+        ${panelStyle}
+        justify-content: center;
+        background: linear-gradient(135deg, rgba(200, 180, 255, 0.7), rgba(180, 240, 190, 0.7));
+      ` 
+    }
+  })
+
+  // Кнопка "Другая случайная"
+  buttonsPanel.createEl("button", {
+    text: "🔀🎲 Другая случайная",
+    attr: { 
+      style: `
+        background-color: rgba(130, 90, 200, 0.9);
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        transition: background-color 0.2s;
+        margin-right: 10px;
+        height: 32px;
+      `
+    }
+  }).onclick = () => {
+    // При ручном обновлении сбрасываем таймер
+    window.localStorage.removeItem(storageKey)
+    window.localStorage.removeItem(`${storageKey}-path`)
+    window.localStorage.removeItem(`${storageKey}-preferred`)
+    dv.container.empty()
+    dv.index.touch()
+  }
+
+  // Кнопка "Открыть и править"
+  buttonsPanel.createEl("button", {
+    text: "📖✒️ Открыть и править",
+    attr: { 
+      style: `
+        background-color: rgba(80, 160, 100, 0.9);
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        transition: background-color 0.2s;
+        height: 32px;
+      `
+    }
+  }).onclick = () => {
+    dv.app.workspace.openLinkText(randomFile.path, "", true)
+  }
+  
+  // Создаем вторую градиентную полосу с названием заметки
+  // Если заметка из предпочитаемой папки или с предпочитаемым тегом, меняем градиент на более насыщенный
+  const titleGradient = isPreferred 
+    ? "linear-gradient(135deg, rgba(200, 180, 255, 0.85), rgba(255, 210, 150, 0.85))" 
+    : "linear-gradient(135deg, rgba(180, 200, 255, 0.7), rgba(200, 220, 170, 0.7))"
+  
+  const titlePanel = dv.container.createEl("div", {
+    attr: { 
+      style: `
+        ${panelStyle}
+        justify-content: center;
+        background: ${titleGradient};
+        margin-bottom: 10px;
+      ` 
+    }
+  })
+  
+  // Добавляем название заметки
+  // Если заметка предпочитаемая, добавляем звездочку
+  const titlePrefix = isPreferred ? "🎲✳️ " : "🎲📜 "
+  titlePanel.createEl("div", {
+    text: `${titlePrefix}${displayName}`,
+    attr: { 
+      style: `
+        margin: 0;
+        color: rgba(70, 40, 100, 1);
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+      `
+    }
+  })
+
+  // Содержимое заметки
+  dv.paragraph(randomContent)
+}
