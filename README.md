@@ -21,7 +21,7 @@
 
 Скрипт написан разными версиями ИИ Claude.
 
-![random_note](random_note) 
+![random_note](random_note.png) 
 
 random_note.png
 
