@@ -21,9 +21,9 @@
 
 Скрипт написан разными версиями ИИ Claude.
 
-![random_note](random_note.png) 
+# [random_note](random_note)
 
-random_note.png
+![random_note](random_note.png) 
 
 Выводит случайную заметку с настройкой периодичности, веса предпочитаемых папок и тегов, с исключением папок и тегов.
 
