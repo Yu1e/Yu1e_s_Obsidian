@@ -1,0 +1,537 @@
+```dataviewjs
+// ══════════════════════════════════════════════════════════════
+//  ЕДИНАЯ ЗАМЕТКА: Случайное всё | Задача | Тег | Подсветки
+// ══════════════════════════════════════════════════════════════
+
+const SETTINGS = {
+  // ─── Теги ───
+  tags: ["#цитаты", "#выписки", "#анки", "#всплывашка"],
+  exactTagMatch: false,
+  caseSensitive: true,
+  contextParagraphs: 1,
+
+  // ─── Подсветки ───
+  highlightCount: 3,
+
+  // ─── Общие ───
+  excludeFolders: ["00-Inbox", "99-Archive", "_templates"],
+  excludeFiles: [/^Daily\//, "untitled", ".excalidraw.md"],
+  excludeLines: [
+    /^\s*```/,
+    /^\s*`[^`]+`/,
+    /^\s*[-*]\s*\[/,
+    /^\s*>\s*/,
+    /dataview\s*:/i,
+    /^\s*---/,
+    /^\s*[^:]+:\s*$/,
+    /^==\s*[A-ZА-ЯЁ\s]+\s*==$/,
+  ],
+  maxFilesToScan: 300,
+  debug: false,
+  customHighlightCSS: `
+    .dv-highlight-block mark {
+    }
+  `,
+};
+
+// ══════════════════════════════════════════════════════════
+//  УТИЛИТЫ
+// ══════════════════════════════════════════════════════════
+
+function isExcludedFolder(path, list) {
+  return list.some(e => path.includes(e) || path.startsWith(e + "/"));
+}
+function isExcludedFile(path, list) {
+  return list.some(e => e instanceof RegExp ? e.test(path) : path.includes(e));
+}
+function isExcludedLine(line, list) {
+  return list.some(p => p instanceof RegExp ? p.test(line) : line.includes(p));
+}
+function lineHasTag(line, tags, s) {
+  const cl = s.caseSensitive ? line : line.toLowerCase();
+  return tags.some(tag => {
+    const st = s.caseSensitive ? tag : tag.toLowerCase();
+    if (s.exactTagMatch) {
+      const esc = st.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return new RegExp(`(^|\\s|\\()${esc}($|\\s|\\)|[.,;:!?])`, s.caseSensitive ? '' : 'i').test(cl);
+    }
+    return cl.includes(st);
+  });
+}
+function removeFrontmatter(lines) {
+  let inFm = false;
+  const r = [];
+  for (let i = 0; i < lines.length; i++) {
+    const l = lines[i];
+    if (i === 0 && l.trim() === "---") { inFm = true; continue; }
+    if (inFm && l.trim() === "---") { inFm = false; continue; }
+    if (!inFm) r.push(l);
+  }
+  return r;
+}
+function removeSpecialBlocks(lines) {
+  let inFm = false, inCode = false;
+  const r = [];
+  for (let i = 0; i < lines.length; i++) {
+    const l = lines[i], t = l.trim();
+    if (i === 0 && t === "---") { inFm = true; continue; }
+    if (inFm && t === "---") { inFm = false; continue; }
+    if (inFm) continue;
+    if (t.startsWith("```")) { inCode = !inCode; continue; }
+    if (inCode) continue;
+    r.push(l);
+  }
+  return r;
+}
+function splitIntoParagraphs(lines) {
+  const ps = []; let cur = [];
+  for (const l of lines) {
+    if (l.trim() === "") { if (cur.length) { ps.push(cur); cur = []; } }
+    else cur.push(l);
+  }
+  if (cur.length) ps.push(cur);
+  return ps;
+}
+function findParagraphWithLine(ps, target) {
+  for (let i = 0; i < ps.length; i++) if (ps[i].includes(target)) return i;
+  return -1;
+}
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function openFile(filePath) {
+  const f = app.vault.getAbstractFileByPath(filePath);
+  if (!f) return;
+  const leaf = app.workspace.getLeaf('tab');
+  leaf.openFile(f);
+}
+function openFileEdit(filePath) {
+  const f = app.vault.getAbstractFileByPath(filePath);
+  if (!f) return;
+  const leaf = app.workspace.getLeaf('tab');
+  leaf.openFile(f, { state: { mode: 'source' } });
+}
+function interceptClicks(el, fn) {
+  el.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation(); fn(); });
+  el.addEventListener('auxclick', e => { e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation(); fn(); });
+  el.addEventListener('mousedown', e => { if (e.button === 0 || e.button === 1) { e.preventDefault(); e.stopPropagation(); } });
+}
+
+// ══════════════════════════════════════════════════════════
+//  ЗАГРУЗКА ДАННЫХ (один раз)
+// ══════════════════════════════════════════════════════════
+
+const allPages = dv.pages().array().filter(p => {
+  const path = p.file.path;
+  return !isExcludedFolder(path, SETTINGS.excludeFolders) && !isExcludedFile(path, SETTINGS.excludeFiles);
+});
+
+const allTasks = dv.pages().file.tasks.map(t => ({
+  text: t.text,
+  file: t.link.fileName(),
+  path: t.path,
+  line: t.position.start.line
+}));
+
+if (SETTINGS.customHighlightCSS && !document.getElementById('dv-highlight-custom')) {
+  const style = document.createElement('style');
+  style.id = 'dv-highlight-custom';
+  style.textContent = SETTINGS.customHighlightCSS;
+  document.head.appendChild(style);
+}
+
+const { MarkdownRenderer } = require('obsidian');
+
+// ══════════════════════════════════════════════════════════
+//  DOM — ОБОЛОЧКА
+// ══════════════════════════════════════════════════════════
+
+const root = dv.el('div', '', { attr: { style: 'width:100%;' } });
+
+// ═══════════════════════════════════════════════════════════
+//  ШАПКА — НАВИГАЦИЯ
+// ═══════════════════════════════════════════════════════════
+
+const headerBox = root.createEl('div', {
+  attr: {
+    style: `
+      background: linear-gradient(135deg, var(--background-secondary) 0%, var(--background-secondary-alt, var(--background-secondary)) 100%);
+      border: 1px solid var(--background-modifier-border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    `
+  }
+});
+
+const nav = headerBox.createEl('div', {
+  attr: {
+    style: `
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+    `
+  }
+});
+
+const MODES = ['all', 'task', 'tag', 'highlight'];
+const LABELS = { all: 'Случайное всё', task: 'Случайная задача', tag: 'Случайный тег', highlight: 'Случайные подсветки' };
+let currentMode = null;
+let actualMode = null;
+const navLinks = {};
+
+function makeDice(parent, targetMode, isFirst = false) {
+  const d = parent.createEl('span', { text: '🎲' });
+  d.style.cssText = `
+    cursor: pointer;
+    font-size: 18px;
+    user-select: none;
+    padding: 4px 6px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    ${isFirst ? '' : 'margin-left: 2px;'}
+  `;
+  d.title = `Обновить: ${LABELS[targetMode]}`;
+  d.addEventListener('mouseenter', () => {
+    d.style.background = 'var(--background-modifier-hover)';
+    d.style.transform = 'scale(1.1)';
+  });
+  d.addEventListener('mouseleave', () => {
+    d.style.background = 'none';
+    d.style.transform = 'scale(1)';
+  });
+  d.addEventListener('click', () => {
+    d.style.transition = 'transform 0.5s ease';
+    d.style.transform = 'rotate(360deg) scale(1.1)';
+    setTimeout(() => {
+      d.style.transition = 'all 0.2s ease';
+      d.style.transform = 'scale(1)';
+    }, 550);
+    activateMode(targetMode);
+  });
+  return d;
+}
+
+// Первый кубик
+makeDice(nav, 'all', true);
+
+MODES.forEach((mode, idx) => {
+  const link = nav.createEl('a', {
+    text: LABELS[mode],
+    attr: {
+      style: `
+        cursor: pointer;
+        text-decoration: none;
+        padding: 5px 10px;
+        border-radius: 8px;
+        font-size: 0.9em;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+        margin-left: 2px;
+      `
+    }
+  });
+  link.addEventListener('mouseenter', () => {
+    if (mode !== currentMode && mode !== actualMode) {
+      link.style.background = 'var(--background-modifier-hover)';
+    }
+  });
+  link.addEventListener('mouseleave', () => {
+    if (mode !== currentMode && mode !== actualMode) {
+      link.style.background = 'none';
+    }
+  });
+  link.addEventListener('click', e => { e.preventDefault(); activateMode(mode); });
+  navLinks[mode] = link;
+
+  if (idx < MODES.length - 1) {
+    makeDice(nav, MODES[idx + 1]);
+  }
+});
+
+function updateNavStyle() {
+  for (const [mode, el] of Object.entries(navLinks)) {
+    const isActive = (mode === currentMode) || (mode === actualMode);
+    if (isActive) {
+      el.style.fontWeight = '700';
+      el.style.color = 'var(--text-accent)';
+      el.style.background = 'var(--background-modifier-hover)';
+    } else {
+      el.style.fontWeight = '400';
+      el.style.color = 'var(--text-muted)';
+      el.style.background = 'none';
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+//  КОНТЕНТ
+// ═══════════════════════════════════════════════════════════
+
+const content = root.createEl('div', '');
+
+// ══════════════════════════════════════════════════════════
+//  ХЕЛПЕРЫ — СТРОКА ЗАМЕТКИ (как в исходнике подсветок)
+// ══════════════════════════════════════════════════════════
+
+function createNoteRow(parent, fileName, filePath) {
+  const noteRow = parent.createEl('div', {
+    attr: { style: 'display:flex; align-items:center; gap:6px; margin-top:10px; flex-wrap:wrap;' }
+  });
+
+  // Ссылка на файл
+  const link = noteRow.createEl('a', {
+    text: fileName,
+    attr: { style: 'color:var(--text-accent); text-decoration:none; cursor:pointer; font-size:0.9em;' }
+  });
+  link.title = 'Открыть в новой вкладке';
+  interceptClicks(link, () => openFile(filePath));
+
+  // ✏️ Кнопка редактирования
+  const editBtn = noteRow.createEl('a', {
+    text: '✏️ открыть и править',
+    attr: { style: 'cursor:pointer; font-size:0.85em; opacity:0.5; text-decoration:none;' }
+  });
+  editBtn.title = 'Открыть для редактирования';
+  editBtn.addEventListener('mouseenter', () => { editBtn.style.opacity = '1'; });
+  editBtn.addEventListener('mouseleave', () => { editBtn.style.opacity = '0.5'; });
+  interceptClicks(editBtn, () => openFileEdit(filePath));
+
+  return noteRow;
+}
+
+// ══════════════════════════════════════════════════════════
+//  РЕНДЕРЫ
+// ══════════════════════════════════════════════════════════
+
+// ─── ЗАДАЧА ───
+async function renderTask() {
+  content.empty();
+  
+  if (!allTasks.length) {
+    content.createEl('div', { text: '⚠️ Нет задач с чекбоксом.' });
+    return;
+  }
+  
+  const task = allTasks[Math.floor(Math.random() * allTasks.length)];
+
+  // Строка с файлом и «открыть и править»
+  createNoteRow(content, task.file, task.path);
+
+  // Контекст (строка перед задачей)
+  const file = app.vault.getAbstractFileByPath(task.path);
+  let contextText = '';
+  if (file) {
+    const fc = await app.vault.cachedRead(file);
+    const lines = fc.split('\n');
+    let fmEnd = -1;
+    if (lines[0] && lines[0].trim() === '---') {
+      for (let i = 1; i < lines.length; i++) {
+        if (lines[i] && lines[i].trim() === '---') { fmEnd = i; break; }
+      }
+    }
+    for (let i = task.line - 1; i > fmEnd; i--) {
+      if (lines[i] && lines[i].trim() !== "") {
+        contextText = lines[i].trim();
+        break;
+      }
+    }
+  }
+
+  if (contextText) {
+    const ctxContainer = content.createEl('div', {
+      cls: 'dv-highlight-block markdown-preview-view markdown-rendered',
+      attr: {
+        style: `
+          font-size: 0.9em;
+          color: var(--text-muted);
+          font-style: italic;
+          border-left: 2px solid var(--background-modifier-border);
+          padding-left: 10px;
+          margin-top: 8px;
+        `
+      }
+    });
+    await MarkdownRenderer.render(app, contextText, ctxContainer, task.path, dv.component);
+  }
+
+  // Сама задача
+  const taskContainer = content.createEl('div', {
+    cls: 'dv-highlight-block markdown-preview-view markdown-rendered',
+    attr: { style: 'margin-top: 8px;' }
+  });
+  // Рендерим как обычный текст с жирным, чтобы чекбокс не показывался криво
+  await MarkdownRenderer.render(app, `**${task.text}**`, taskContainer, task.path, dv.component);
+}
+
+// ─── ТЕГ ───
+async function renderTag() {
+  content.empty();
+
+  const baseTag = SETTINGS.tags[0];
+  let candidates = dv.pages(baseTag).array();
+  if (SETTINGS.tags.length > 1) {
+    for (let i = 1; i < SETTINGS.tags.length; i++) {
+      candidates = [...candidates, ...dv.pages(SETTINGS.tags[i]).array()];
+    }
+    candidates = candidates.filter((v, i, a) => a.findIndex(x => x.file.path === v.file.path) === i);
+  }
+  candidates = candidates.filter(p => {
+    const path = p.file.path;
+    return !isExcludedFolder(path, SETTINGS.excludeFolders) && !isExcludedFile(path, SETTINGS.excludeFiles);
+  });
+
+  if (!candidates.length) {
+    content.createEl('div', { text: `⚠️ Не найдено заметок по тегам: ${SETTINGS.tags.join(', ')}` });
+    return;
+  }
+  if (candidates.length > SETTINGS.maxFilesToScan) {
+    candidates = candidates.slice(0, SETTINGS.maxFilesToScan);
+  }
+
+  const matches = [];
+  for (const page of candidates) {
+    try {
+      const c = await dv.io.load(page.file.path);
+      if (!c) continue;
+      const contentLines = removeFrontmatter(c.split("\n"));
+      for (let rawLine of contentLines) {
+        const line = rawLine.trim();
+        if (!line) continue;
+        if (isExcludedLine(line, SETTINGS.excludeLines)) continue;
+        if (lineHasTag(line, SETTINGS.tags, SETTINGS)) {
+          const paragraphs = splitIntoParagraphs(contentLines);
+          const paraIndex = findParagraphWithLine(paragraphs, rawLine);
+          if (paraIndex === -1) continue;
+          const ctx = SETTINGS.contextParagraphs;
+          const startIdx = Math.max(0, paraIndex - ctx);
+          const endIdx = Math.min(paragraphs.length - 1, paraIndex + ctx);
+          const outputParas = [];
+          for (let i = startIdx; i <= endIdx; i++) outputParas.push(paragraphs[i].join("\n"));
+          matches.push({ page, paragraphs: outputParas, targetIndex: paraIndex - startIdx });
+        }
+      }
+    } catch (err) {
+      if (SETTINGS.debug) console.error(`[TagPicker] Ошибка: ${page.file.path}`, err);
+    }
+  }
+
+  if (!matches.length) {
+    content.createEl('div', { text: 'ℹ️ Файлы найдены, но ни одна строка не прошла фильтры.' });
+    return;
+  }
+
+  const picked = matches[Math.floor(Math.random() * matches.length)];
+  const filePath = picked.page.file.path;
+  const fileName = picked.page.file.name;
+
+  // Строка с файлом и «открыть и править»
+  createNoteRow(content, fileName, filePath);
+
+  // Абзацы — главный выделяем полоской слева
+  for (let i = 0; i < picked.paragraphs.length; i++) {
+    const isTarget = (i === picked.targetIndex);
+    const paraContainer = content.createEl('div', {
+      cls: 'dv-highlight-block markdown-preview-view markdown-rendered',
+      attr: {
+        style: isTarget
+          ? 'margin-top:10px; border-left:3px solid var(--text-accent); padding-left:12px;'
+          : 'margin-top:10px; opacity:0.6; padding-left:12px; border-left:3px solid var(--background-modifier-border);'
+      }
+    });
+    await MarkdownRenderer.render(app, picked.paragraphs[i], paraContainer, filePath, dv.component);
+  }
+}
+
+// ─── ПОДСВЕТКИ ───
+async function renderHighlight() {
+  content.empty();
+
+  let candidates = [...allPages];
+  shuffle(candidates);
+  if (candidates.length > SETTINGS.maxFilesToScan) {
+    candidates = candidates.slice(0, SETTINGS.maxFilesToScan);
+  }
+
+  const pureHighlightRegex = /==(?![*_~`])([^=]+?)(?<![*_~`])==/;
+  const fileMatches = [];
+
+  for (const page of candidates) {
+    try {
+      const c = await dv.io.load(page.file.path);
+      if (!c) continue;
+      const contentLines = removeSpecialBlocks(c.split("\n"));
+      const highlightedLines = [];
+      for (const line of contentLines) {
+        if (pureHighlightRegex.test(line) && !isExcludedLine(line.trim(), SETTINGS.excludeLines)) {
+          highlightedLines.push(line);
+        }
+      }
+      if (highlightedLines.length > 0) {
+        fileMatches.push({ page, highlightedLines });
+      }
+    } catch (err) {
+      if (SETTINGS.debug) console.error(`[HighlightPicker] Ошибка: ${page.file.path}`, err);
+    }
+  }
+
+  if (!fileMatches.length) {
+    content.createEl('div', { text: 'ℹ️ Не найдено заметок с ==подсветкой==.' });
+    return;
+  }
+
+  shuffle(fileMatches);
+  const pickedNotes = fileMatches.slice(0, SETTINGS.highlightCount);
+  const results = pickedNotes.map(fm => {
+    const idx = Math.floor(Math.random() * fm.highlightedLines.length);
+    return {
+      page: fm.page,
+      filePath: fm.page.file.path,
+      fileName: fm.page.file.name,
+      line: fm.highlightedLines[idx]
+    };
+  });
+
+  // Каждая подсветка: строка с файлом + контент
+  for (const item of results) {
+    // Строка с файлом и «открыть и править»
+    createNoteRow(content, item.fileName, item.filePath);
+
+    // Контент
+    const container = content.createEl('div', {
+      cls: 'dv-highlight-block markdown-preview-view markdown-rendered',
+      attr: { style: 'margin-top: 4px;' }
+    });
+    await MarkdownRenderer.render(app, item.line, container, item.filePath, dv.component);
+  }
+}
+
+// ══════════════════════════════════════════════════════════
+//  ПЕРЕКЛЮЧЕНИЕ
+// ══════════════════════════════════════════════════════════
+
+async function activateMode(mode) {
+  let actual = mode;
+  if (mode === 'all') {
+    const choices = ['task', 'tag', 'highlight'];
+    actual = choices[Math.floor(Math.random() * choices.length)];
+  }
+  currentMode = mode;
+  actualMode = actual;
+  updateNavStyle();
+
+  if (actual === 'task') await renderTask();
+  else if (actual === 'tag') await renderTag();
+  else if (actual === 'highlight') await renderHighlight();
+}
+
+// ─── Старт ───
+activateMode('all');
+```
