@@ -1,27 +1,3 @@
----
-ink-image: ""
-ink-name: ""
-ink-brand: ""
-ink-line: ""
-ink-colour: ""
-ink-shimmer: ""
-ink-sheen: ""
-ink-halo: ""
-ink-bleeding: ""
-ink-shading: ""
-ink-ghosting: ""
-ink-feathering: ""
-ink-ml: ""
-ink-container: ""
-ink-status: ""
-ink-buying-date: ""
-ink-shop: ""
-ink-price: 
-ink-ml-price: 
-ink-pen-now: ""
-ink-fill-date: ""
-ink-rating: 
----
 <%*
 // Шаблон для коллекции чернил. В настройках плагина Templater установлено применение этого шаблона в папке Чайник_с_чернилками/Чернила_коллекция. Требуется доработка градиента в шапке? См. [[../../Чайник_с_чернилками/template_шаблон_чернил|template_шаблон_чернил]]?
 const inkName = await tp.system.prompt("Название чернил");
@@ -263,6 +239,14 @@ if (inkImage && inkImage !== "—") {
 > }
 > ```
 
+> [!attention]- Остальные свойства
+> <sup>прочерк означает «ещё нет данных»</sup>
+> - [ink-sheen:: ]
+> - [ink-halo:: ]
+> - [ink-bleeding:: ]
+> - [ink-shading:: ]
+> - [ink-ghosting:: ]
+> - [ink-feathering:: ]
 ```dataviewjs
 const ruMonths = ["янв","февр","март","апр","мая","июня","июля","авг","сент","окт","ноя","дек"];
 const formatDate = (val) => {
@@ -295,17 +279,17 @@ if(c["ink-rating"]){
 if(rows.length) dv.paragraph(`<table style="width:100%;border-collapse:collapse;font-size:0.95em">${rows.join("")}</table>`)
 ```
 
-> [!attention] Критично, важно
-> ...
+> [!attention] Критично, важно:
+> (ink-txt1::  )
 
 > [!note] Мои наблюдения и замечания
-> ...
+> (ink-txt2::  )
 
 > [!abstract] Описание от ИИ
-> ...
+> (ink-txt3::  )
 
 > [!tip] Этимология от ИИ
-> ...
+> (ink-txt4::  )
 
 ##### Ссылки
 %% [Ссылка на заказ]()
