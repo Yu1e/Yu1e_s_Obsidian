@@ -25,7 +25,7 @@ const inkName = await tp.system.prompt("Название");
 if (inkBrand && inkBrand.trim() && inkName && inkName.trim()) {
     const cleanBrand = inkBrand.trim();
     const cleanName = inkName.trim();
-    const fileName = cleanBrand + "_" + cleanName;
+    const fileName = cleanBrand + " " + cleanName;
     
     // 1. Переименовываем файл (Бренд_Название)
     await tp.file.rename(fileName);
