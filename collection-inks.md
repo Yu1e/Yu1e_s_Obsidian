@@ -261,14 +261,6 @@ if (inkImage && inkImage !== "—") {
 > }
 > ```
 
-> [!attention]- Остальные свойства
-> <sup>нет / слабо / сильно! Прочерк = ещё нет данных</sup>
-> - [ink-sheen:: ]
-> - [ink-shading:: ]
-> - [ink-halo:: ]
-> - [ink-ghosting:: ]
-> - [ink-bleeding:: ]
-> - [ink-feathering:: ]
 ```dataviewjs
 const ruMonths = ["янв","февр","март","апр","мая","июня","июля","авг","сент","окт","ноя","дек"];
 const formatDate = (val) => {
@@ -301,12 +293,14 @@ if(c["ink-rating"]){
 if(rows.length) dv.paragraph(`<table style="width:100%;border-collapse:collapse;font-size:0.95em">${rows.join("")}</table>`)
 ```
 
-> [!attention]- Остальные свойства <sup>прочерк означает «ещё нет данных»</sup>
+##### Дополнения
+> [!attention]- Остальные свойства
+> <sup>нет / слабо / сильно! Прочерк = ещё нет данных</sup>
 > - [ink-sheen:: ]
-> - [ink-halo:: ]
-> - [ink-bleeding:: ]
 > - [ink-shading:: ]
+> - [ink-halo:: ]
 > - [ink-ghosting:: ]
+> - [ink-bleeding:: ]
 > - [ink-feathering:: ]
 
 > [!attention] Критично, важно:
