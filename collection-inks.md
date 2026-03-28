@@ -1,15 +1,36 @@
+---
+ink-image: ""
+ink-name: ""
+ink-brand: ""
+ink-line: ""
+ink-colour: ""
+ink-shimmer: ""
+ink-ml: ""
+ink-container: ""
+ink-status: ""
+ink-buying-date: ""
+ink-shop: ""
+ink-price: 
+ink-ml-price: 
+ink-pen-now: ""
+ink-fill-date: ""
+ink-rating: 
+---
 <%*
 // Шаблон для коллекции чернил. В настройках плагина Templater установлено применение этого шаблона в папке Чайник_с_чернилками/Чернила_коллекция
 
-const inkName = await tp.system.prompt("Название чернил");
+const inkBrand = await tp.system.prompt("Бренд");
+const inkName = await tp.system.prompt("Название");
 
-if (inkName && inkName.trim()) {
+if (inkBrand && inkBrand.trim() && inkName && inkName.trim()) {
+    const cleanBrand = inkBrand.trim();
     const cleanName = inkName.trim();
+    const fileName = cleanBrand + "_" + cleanName;
     
-    // 1. Переименовываем файл
-    await tp.file.rename(cleanName);
+    // 1. Переименовываем файл (Бренд_Название)
+    await tp.file.rename(fileName);
     
-    // 2. Добавляем ink-name в frontmatter вручную, не затирая контент
+    // 2. Добавляем ink-brand и ink-name в frontmatter вручную, не затирая контент
     const file = app.workspace.getActiveFile();
     const content = await app.vault.read(file);
     
@@ -20,14 +41,14 @@ if (inkName && inkName.trim()) {
         if (endFrontmatter > 0) {
             const frontmatter = content.substring(3, endFrontmatter);
             const rest = content.substring(endFrontmatter + 3);
-            // Добавляем свойство в frontmatter
-            newContent = '---\n' + frontmatter.trim() + '\nink-name: ' + cleanName + '\n---' + rest;
+            // Добавляем свойства в frontmatter
+            newContent = '---\n' + frontmatter.trim() + '\nink-brand: ' + cleanBrand + '\nink-name: ' + cleanName + '\n---' + rest;
         } else {
             newContent = content;
         }
     } else {
         // Если нет frontmatter, создаём его
-        newContent = '---\nink-name: ' + cleanName + '\n---\n' + content;
+        newContent = '---\nink-brand: ' + cleanBrand + '\nink-name: ' + cleanName + '\n---\n' + content;
     }
     
     await app.vault.modify(file, newContent);
@@ -241,12 +262,12 @@ if (inkImage && inkImage !== "—") {
 > ```
 
 > [!attention]- Остальные свойства
-> <sup>прочерк означает «ещё нет данных»</sup>
+> <sup>нет / слабо / сильно! Прочерк = ещё нет данных</sup>
 > - [ink-sheen:: ]
-> - [ink-halo:: ]
-> - [ink-bleeding:: ]
 > - [ink-shading:: ]
+> - [ink-halo:: ]
 > - [ink-ghosting:: ]
+> - [ink-bleeding:: ]
 > - [ink-feathering:: ]
 ```dataviewjs
 const ruMonths = ["янв","февр","март","апр","мая","июня","июля","авг","сент","окт","ноя","дек"];
@@ -279,6 +300,14 @@ if(c["ink-rating"]){
 
 if(rows.length) dv.paragraph(`<table style="width:100%;border-collapse:collapse;font-size:0.95em">${rows.join("")}</table>`)
 ```
+
+> [!attention]- Остальные свойства <sup>прочерк означает «ещё нет данных»</sup>
+> - [ink-sheen:: ]
+> - [ink-halo:: ]
+> - [ink-bleeding:: ]
+> - [ink-shading:: ]
+> - [ink-ghosting:: ]
+> - [ink-feathering:: ]
 
 > [!attention] Критично, важно:
 > (ink-txt1::  )
