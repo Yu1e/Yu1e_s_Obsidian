@@ -1,0 +1,610 @@
+/* ============================== */
+/*  ГРАДИЕНТНАЯ ПЛАШКА, ПОДСВЕТКА + КОД
+/* ============================== */
+
+.markdown-preview-view mark:has(> code),
+.markdown-preview-view code:has(> mark),
+.markdown-reading-view mark:has(> code),
+.markdown-reading-view code:has(> mark),
+.markdown-source-view.mod-cm6 .cm-highlight.cm-inline-code,
+.markdown-source-view.mod-cm6 .cm-inline-code.cm-highlight,
+.markdown-source-view.mod-cm6 .cm-highlight > .cm-inline-code,
+.markdown-source-view.mod-cm6 .cm-inline-code > .cm-highlight {
+  display: inline-block;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1 !important;
+  vertical-align: text-bottom !important;
+  padding: 0.35em 0.7em;
+  margin-right: 0.7em;
+  color: var(--background-primary, #ffffff) !important;
+  background: linear-gradient(135deg, #4a90e2, #7b68ee);
+    border: none !important;
+  position: relative;
+  overflow: visible;
+}
+
+/* Сброс вложенности */
+.markdown-preview-view mark:has(> code) > code,
+.markdown-preview-view code:has(> mark) > mark,
+.markdown-reading-view mark:has(> code) > code,
+.markdown-reading-view code:has(> mark) > mark {
+  all: unset !important;
+}
+
+/* Сниппет выравнивания в начале строки */
+.markdown-preview-view :is(p, li, h1, h2, h3, h4, h5, h6)
+ > :is(mark:has(> code), code:has(> mark)):first-child,
+.markdown-reading-view :is(p, li, h1, h2, h3, h4, h5, h6)
+ > :is(mark:has(> code), code:has(> mark)):first-child {
+  margin-left: 0 !important;
+  top: 0;
+}
+
+/* Live Preview сброс default стилей и отступов */
+.cm-highlight.cm-inline-code,
+.cm-inline-code.cm-highlight {
+  text-decoration: none !important;
+  font-style: normal !important;
+}
+
+/* Курсив внутри плашки — сброс, чтобы не тянул свои рамку и цвет */
+.markdown-source-view.mod-cm6 .cm-strong.cm-em,
+.markdown-source-view.mod-cm6 .cm-em.cm-strong,
+.markdown-source-view.mod-cm6 .cm-em.cm-strikethrough,
+.markdown-source-view.mod-cm6 .cm-strikethrough.cm-em {
+  left: 0 !important;
+  letter-spacing: normal !important;
+}
+
+/* Код внутри плашки — сброс значков < > и фона */
+.markdown-source-view.mod-cm6 .cm-highlight.cm-inline-code::before,
+.markdown-source-view.mod-cm6 .cm-highlight.cm-inline-code::after,
+.markdown-source-view.mod-cm6 .cm-inline-code.cm-highlight::before,
+.markdown-source-view.mod-cm6 .cm-inline-code.cm-highlight::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Маркер внутри плашки — сброс зигзага и звёздочки */
+.markdown-source-view.mod-cm6 .cm-highlight.cm-inline-code,
+.markdown-source-view.mod-cm6 .cm-inline-code.cm-highlight {
+  left: 0 !important;
+  margin: 0 !important;
+  vertical-align: text-bottom !important;
+}
+
+/* Сброс влияния маркера на комбинацию подсветка+код */
+.markdown-source-view.mod-cm6 .cm-highlight.cm-inline-code,
+.markdown-source-view.mod-cm6 .cm-inline-code.cm-highlight {
+  color: var(--background-primary, #ffffff) !important;
+  background: linear-gradient(135deg, #4a90e2, #7b68ee) !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  font-weight: normal !important;
+  font-variant-caps: normal !important;
+  letter-spacing: normal !important;
+  left: 6px !important;
+  margin: 0 !important;
+  vertical-align: baseline !important;
+  font-family: "JetBrains Mono", "Fira Mono", "Consolas", monospace !important;
+  font-size: 0.95em !important;
+  padding: 0.1em 0.3em !important;
+  border-radius: 0.25em !important;
+  display: inline !important;
+  line-height: normal !important;
+}
+.markdown-source-view.mod-cm6 .cm-highlight.cm-inline-code,
+.markdown-source-view.mod-cm6 .cm-inline-code.cm-highlight {
+  background: linear-gradient(135deg, #4a90e2, #7b68ee) !important;
+  text-decoration: none !important;
+}
+
+/* Сброс отступа у градиентной плашки подсветка+код */
+.markdown-source-view.mod-cm6 .cm-highlight.cm-inline-code,
+.markdown-source-view.mod-cm6 .cm-inline-code.cm-highlight {
+  left: 0 !important;
+}
+
+.markdown-preview-view mark:has(> code),
+.markdown-preview-view code:has(> mark),
+.markdown-reading-view mark:has(> code),
+.markdown-reading-view code:has(> mark) {
+  left: 0 !important;
+}
+
+/* ============================== */
+/* 
+~~Так~~ — ЗАЧЁРКИВАНИЕ, бледный фон, тёмный цвет, лёгкий сдвиг.
+Работает только в Live Preview и Preview, в режиме исходного кода отображается стандартно.
+*//* ============================== */
+
+.markdown-preview-view del,
+.markdown-source-view.mod-cm6 .cm-strikethrough {
+  color: #616161;
+  background: #f5f5f5;
+  padding: 0.1em 0.3em;
+  border-radius: 0.25em;
+  text-decoration: line-through;
+  position: relative;
+  left: 5px;
+}
+
+/* ============================== */
+/* `Так` — КОД, бледный фон, тёмный цвет, лёгкий сдвиг, призрачные ломаные скобки сабскриптом.
+Работает только в Live Preview и Preview, в режиме исходного кода отображается стандартно.*/
+/* ============================== */
+
+.markdown-preview-view code,
+.markdown-source-view.mod-cm6 .cm-inline-code {
+  color: #0c628d;
+  background: #eceff1;
+  padding: 0.1em 0.3em;
+  border-radius: 0.25em;
+  font-family: "JetBrains Mono", "Fira Mono", "Consolas", monospace;
+  font-size: 0.95em;
+  position: relative;
+  left: 6px;
+}
+.markdown-preview-view code::before,
+.markdown-source-view.mod-cm6 .cm-inline-code::before {
+  content: "<";
+  opacity: 0.4;
+  font-size: 0.8em;
+  vertical-align: sub;
+  margin-right: 0.1em;
+  font-weight: bold;
+  font-family: inherit;
+}
+.markdown-preview-view code::after,
+.markdown-source-view.mod-cm6 .cm-inline-code::after {
+  content: ">";
+  opacity: 0.4;
+  font-size: 0.8em;
+  vertical-align: sub;
+  margin-left: 0.1em;
+  font-weight: bold;
+  font-family: inherit;
+}
+
+/* ============================== */
+/*ПЛАШКИ РОЗОВО-ЖЁЛТЫЕ ПРИОРИТЕТНОСТИ, ЗАДАЧ И ВООБЩЕ ВСЯКИХ СОСТОЯНИЙ И СТАДИЙ. ПЛАШКИ, КОРОЧЕ
+полужирный + курсив
+/* ============================== */
+
+.markdown-source-view.mod-cm6 .cm-line {
+  overflow: visible !important;
+}
+
+.markdown-source-view.mod-cm6 .cm-strong.cm-em,
+.markdown-source-view.mod-cm6 .cm-em.cm-strong,
+.markdown-source-view.mod-cm6 .cm-strong.cm-em.cm-list-1,
+.markdown-source-view.mod-cm6 .cm-em.cm-strong.cm-list-1 {
+  background: linear-gradient(90deg, #ffe0b2 0%, #f8a6c1 100%) !important;
+  color: #0d1333 !important;
+  border-radius: 0.65em !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18) !important;
+  padding: 0.08em 0.42em !important;
+  display: inline-block !important;
+  overflow: visible !important;
+  text-decoration: none !important;
+  border: none !important;
+  outline: none !important;
+  font-weight: normal !important;
+  font-style: normal !important;
+}
+
+.markdown-source-view.mod-cm6 .cm-strong.cm-em,
+.markdown-source-view.mod-cm6 .cm-em.cm-strong,
+.markdown-source-view.mod-cm6 .cm-strong.cm-em.cm-list-1,
+.markdown-source-view.mod-cm6 .cm-em.cm-strong.cm-list-1 {
+  background: linear-gradient(90deg, #ffe0b2 0%, #f8a6c1 100%) !important;
+  color: #0d1333 !important;
+  border-radius: 0.22em !important; /* Табличка, не пилюля */
+  box-shadow: /* Сдвинутая тень таблички */
+    -7px 7px 2px rgba(0,0,0,0.18),
+    0 0 0 1px rgba(0,0,0,0.10) !important;
+
+  padding: --0.08em 0.42em !important;
+  display: inline-block !important;
+  overflow: visible !important;
+  text-decoration: none !important;
+  border: none !important;
+  outline: none !important;
+  font-weight: normal !important;
+  font-style: normal !important;
+}
+
+/* ============================== */
+/* ОКРУГЛАЯ РАМКА БЕЗ ЗАЛИВКИ, курсивное выделение Ctrl+I, _так_ или *так*
+Работает только в Live Preview и Preview, в режиме исходного кода отображается стандартно. Разнести разные способы выделения нельзя*/
+/* ============================== */
+.markdown-preview-view em:not(mark > em):not(del > em),
+.markdown-reading-view em:not(mark > em):not(del > em),
+.markdown-source-view.mod-cm6 .cm-em:not(.cm-highlight):not(.cm-strikethrough) {
+  font-style: normal;
+  text-decoration: none;
+  color: #00695c; 
+  padding: 0.1em 0.3em;
+  border: 1px solid #000000;
+  border-radius: 0.35em;
+  position: relative;
+  left: 2px;
+  letter-spacing: 0.04em;
+  font-size: 0.92em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* ============================== */
+/* СТИКЕР-ДАТА С ГРАДИЕНТОМ И КАЛЕНДАРЁМ КУРСИВ+КОД */ 
+/* ============================== */
+
+/* Live Preview */
+.markdown-source-view.mod-cm6 .cm-strong > .cm-inline-code,
+.markdown-source-view.mod-cm6 .cm-strong.cm-inline-code {
+  font-family: 'Jokerman', cursive !important;
+  font-size: 0.8em !important;
+  background: linear-gradient(30deg, #c7c7c7 0%, #ebeaea 100%) !important; 
+  border: 0.05px solid #c2c1c1 !important;
+  border-radius: 1.1em 0 1.1em 0 !important;
+  padding: 0.32em 0.5em 0.10em 2em !important;
+  /*box-shadow: 0 2px 14px 0 #bbb7 !important;*/
+  color: #a8a4a4 !important;
+  display: inline-block !important;
+  margin: 0.1em 0.05em !important;
+  transform: skew(-10deg, 0deg) rotate(-2deg) !important;
+  min-width: 6em !important;
+  text-align: center !important;
+  position: relative !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  z-index: 1 !important;
+}
+
+/* Календарик */
+.markdown-source-view.mod-cm6 .cm-strong > .cm-inline-code::before,
+.markdown-source-view.mod-cm6 .cm-strong.cm-inline-code::before,
+.markdown-preview-view strong code::before {
+  content: "📅";
+  position: absolute;
+  left: 0.5em;
+  top: 0.08em;
+  font-size: 1em;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.95;
+  color: #fff;
+}
+
+/* ОТМЕНА псевдоэлементов кода для сочетания полужирный+код */
+.markdown-source-view.mod-cm6 .cm-strong > .cm-inline-code::after,
+.markdown-source-view.mod-cm6 .cm-strong.cm-inline-code::after,
+.markdown-preview-view strong code::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Preview */
+.markdown-preview-view strong code {
+  font-family: 'Jokerman', cursive !important;
+  font-size: 0.8em !important;
+  background: linear-gradient(100deg, #b8b8b8 0%, #6a6868 100%) !important; 
+  border: 1.5px solid #888 !important;
+  box-shadow: 0 2px 14px 0 #bbb7 !important;
+  border-radius: 1.1em 0 1.1em 0 !important;
+  padding: 0.32em 0.5em 0.10em 2em !important;
+  color: #fff !important;
+  display: inline-block !important;
+  margin: 0.1em 0.05em !important;
+  transform: skew(-10deg, 0deg) rotate(-2deg) !important;
+  min-width: 6em !important;
+  text-align: center !important;
+  position: relative !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  z-index: 1 !important;
+}
+
+/* ============================== */
+/* МАРКЕР+ИТАЛИК */
+/* === CSS: серый суперскрипт при двойном Markdown-выделении (==*...*== и *==...==*) === */
+/* ============================== */
+
+/* ✏ Live preview (редактор) */
+/* 1. Курсив и хайлайт */
+.markdown-source-view.mod-cm6 span.cm-em.cm-highlight {
+  all: unset !important;
+  color: #a8a8a8 !important;
+  font-size: 0.74em !important;
+  vertical-align: super !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  line-height: 1 !important;
+  display: inline !important;
+  background: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  border: none !important;
+}
+
+/* 2. Хайлайтер внутри курсивного (редко, но бывает) */
+.markdown-source-view.mod-cm6 .cm-em > .cm-highlight {
+  all: unset !important;
+  color: #a8a8a8 !important;
+  font-size: 0.74em !important;
+  vertical-align: super !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  background: none !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  display: inline !important;
+  box-shadow: none !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  border: none !important;
+}
+
+/* 3. Удаляем псевдоэлементы у таких комбинированных блоков */
+.markdown-source-view.mod-cm6 .cm-highlight.cm-em::before,
+.markdown-source-view.mod-cm6 .cm-highlight.cm-em::after,
+.markdown-source-view.mod-cm6 .cm-em > .cm-highlight::before,
+.markdown-source-view.mod-cm6 .cm-em > .cm-highlight::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* 📖 Reading preview mode - ТОЛЬКО ДЛЯ КОМБИНАЦИЙ */
+
+/* 1. mark > em — курсив внутри хайлайта (только если действительно есть em внутри) */
+.markdown-reading-view mark:has(> em),
+.markdown-reading-view mark:has(> i) {
+  all: unset !important;
+  color: #a8a8a8 !important;
+  font-size: 0.74em !important;
+  vertical-align: super !important;
+  display: inline !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  line-height: 1 !important;
+  background: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+}
+
+/* 2. em > mark — хайлайт внутри курсива */
+.markdown-reading-view em:has(> mark),
+.markdown-reading-view i:has(> mark) {
+  all: unset !important;
+  color: #a8a8a8 !important;
+  font-size: 0.74em !important;
+  vertical-align: super !important;
+  display: inline !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  line-height: 1 !important;
+  background: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+}
+
+/* Сброс вложенных элементов только в комбинациях */
+.markdown-reading-view mark:has(> em) > em,
+.markdown-reading-view mark:has(> i) > i,
+.markdown-reading-view em:has(> mark) > mark,
+.markdown-reading-view i:has(> mark) > mark {
+  all: unset !important;
+}
+
+/* Удаляем псевдоэлементы только у комбинаций */
+.markdown-reading-view mark:has(> em)::before,
+.markdown-reading-view mark:has(> em)::after,
+.markdown-reading-view mark:has(> i)::before,
+.markdown-reading-view mark:has(> i)::after,
+.markdown-reading-view em:has(> mark)::before,
+.markdown-reading-view em:has(> mark)::after,
+.markdown-reading-view i:has(> mark)::before,
+.markdown-reading-view i:has(> mark)::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+}
+
+/* ============================== */
+/* === ПРИНУДИТЕЛЬНОЕ ИСПРАВЛЕНИЕ ТЕГА <u> === */
+/* ============================== */
+
+/* 1. Для режима ЧТЕНИЯ (Preview) */
+.markdown-preview-view u,
+.markdown-preview-section u {
+    text-decoration: underline !important;
+    text-decoration-line: underline !important;
+    text-decoration-style: solid !important;
+    text-decoration-color: black !important;
+    border-bottom: none !important;
+    box-shadow: none !important; /* Убираем тени, если они имитируют подчёркивание */
+}
+
+/* 2. Для режима редактора (Editor / Live Preview) */
+.cm-s-obsidian span.cm-inline-code,
+.cm-s-obsidian u,
+.cm-line u {
+    text-decoration: underline !important;
+    text-decoration-line: underline !important;
+    text-decoration-style: solid !important;
+    text-decoration-color: black !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+}
+
+/* 3. Глобальный сброс для любых вложенностей */
+div u,
+p u,
+li u {
+    text-decoration: underline !important;
+    text-decoration-style: solid !important;
+    text-decoration-color: black !important;
+    border-bottom: none !important;
+}
+
+
+.markdown-source-view.mod-cm6 .cm-em.cm-strong.cm-list-1 {
+  background: linear-gradient(90deg, #ffe0b2 0%, #f8a6c1 100%) !important;
+  color: #0d1333 !important;
+
+  /* Табличка, не пилюля */
+  border-radius: 0.22em !important;
+
+  /* Сдвинутая чёткая тень таблички */
+  box-shadow:
+    2px 3px 0px rgba(0,0,0,0.18),
+    0 0 0 1px rgba(0,0,0,0.10) !important;
+
+  padding: 0.08em 0.42em !important;
+  display: inline-block !important;
+  overflow: visible !important;
+  text-decoration: none !important;
+  border: none !important;
+  outline: none !important;
+  font-weight: normal !important;
+  font-style: normal !important;
+}
+
+/* ============================== */
+/* *курсив* + ~~зачёркивание~~ 
+   Markdown: ~~*текст*~~ или *~~текст~~* 
+   СПОКОЙНОЕ СЕРОЕ */
+/* ============================== */
+
+/* Для Preview и Reading режимов */
+.markdown-preview-view del:has(> em),
+.markdown-preview-view em:has(> del),
+.markdown-reading-view del:has(> em),
+.markdown-reading-view em:has(> del) {
+  display: inline-block !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  padding: 0.1em 0.3em !important;
+  color: #050505 !important;
+  background: linear-gradient(to right, #e3e6ed, #c8c5c9) !important;
+  box-shadow: none !important;
+  border-radius: 0.4em !important;
+  border: none !important;
+  text-decoration: none !important;
+  left: 0 !important;
+  position: relative !important;
+}
+
+/* Сброс стилей вложенных элементов */
+.markdown-preview-view del:has(> em) > em,
+.markdown-preview-view em:has(> del) > del,
+.markdown-reading-view del:has(> em) > em,
+.markdown-reading-view em:has(> del) > del {
+  all: unset !important;
+}
+
+/* Live Preview */
+.markdown-source-view.mod-cm6 .cm-em.cm-strikethrough,
+.markdown-source-view.mod-cm6 .cm-strikethrough.cm-em {
+  display: inline-block !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  padding: 0.06em 0.2em !important;
+  color: #050505 !important;
+  background: linear-gradient(to right, #e3e6ed, #c8c5c9) !important;
+  box-shadow: none !important;
+  border-radius: 0.4em !important;
+  border: none !important;
+  text-decoration: none !important;
+  left: 0 !important;
+  position: relative !important;
+}
+
+.markdown-preview-view del:has(> em),
+.markdown-preview-view em:has(> del),
+.markdown-reading-view del:has(> em),
+.markdown-reading-view em:has(> del) {
+  display: inline !important;
+  -webkit-box-decoration-break: clone !important;
+  box-decoration-break: clone !important;
+}
+
+.markdown-source-view.mod-cm6 .cm-em.cm-strikethrough,
+.markdown-source-view.mod-cm6 .cm-strikethrough.cm-em {
+  display: inline !important;
+  -webkit-box-decoration-break: clone !important;
+  box-decoration-break: clone !important;
+}
+
+/* ============================== */
+/* ==ТЕРМИН== — ВЫСОКАЯ СПЕЦИФИЧНОСТЬ */
+/* ============================== */
+
+.markdown-preview-view mark:not([class]),
+.markdown-reading-view mark:not([class]),
+.markdown-source-view.mod-cm6 .cm-highlight:not(.cm-em):not(.cm-strong):not(.cm-inline-code) {
+  color: #457d4b !important;
+  background-color: transparent !important;
+  border-left: 0.5px solid #888 !important;
+  border-right: 0.5px solid #888 !important;
+  border-top: 0.2px solid #888 !important;
+  border-bottom: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0em 0.5em 0.3em 0.5em !important;
+  font-weight: 600 !important;
+  font-size: 1em !important;
+  letter-spacing: 0.01em !important;
+  font-family: 'Segoe UI', 'Arial', sans-serif !important;
+  position: relative !important;
+  left: 2px !important;
+  display: inline-block !important;
+  margin: 0.15em 0.1em !important;
+  vertical-align: 0.08em !important;
+  overflow: visible !important;
+  font-variant-caps: small-caps !important;
+  line-height: 1.05 !important;
+}
+
+/* Звёздочка */
+.markdown-preview-view mark::before,
+.markdown-reading-view mark::before,
+.markdown-source-view.mod-cm6 .cm-highlight::before {
+  content: "✨";
+  position: absolute;
+  left: -0.7em;
+  top: -0.7em;
+  font-size: 1em;
+  opacity: 0.92;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Зигзаг снизу */
+.markdown-preview-view mark::after,
+.markdown-reading-view mark::after,
+.markdown-source-view.mod-cm6 .cm-highlight::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0; right: 0; bottom: -0.5px;
+  height: 6px;
+  pointer-events: none;
+  background: url("data:image/svg+xml;utf8,<svg width='10' height='6' xmlns='http://www.w3.org/2000/svg'><polyline points='0,6 5,0 10,6' stroke='%23888' fill='none' stroke-width='1'/></svg>") repeat-x;
+  background-size: 10px 6px;
+  z-index: 2;
+}
