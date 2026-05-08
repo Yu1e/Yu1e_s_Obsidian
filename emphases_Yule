@@ -226,8 +226,7 @@
 .markdown-source-view.mod-cm6 .cm-em:not(.cm-highlight):not(.cm-strikethrough) {
   font-style: normal;
   text-decoration: none;
-  color: #00695c; 
-  padding: 0.1em 0.3em;
+  padding: 0.03em 0.7em;
   border: 1px solid #000000;
   border-radius: 0.35em;
   position: relative;
@@ -487,7 +486,7 @@ li u {
 /* ============================== */
 /* *курсив* + ~~зачёркивание~~ 
    Markdown: ~~*текст*~~ или *~~текст~~* 
-   СПОКОЙНОЕ СЕРОЕ */
+   СПОКОЙНЫЙ СЕРЫЙ */
 /* ============================== */
 
 /* Для Preview и Reading режимов */
