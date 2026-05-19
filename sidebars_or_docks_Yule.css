@@ -1,0 +1,11 @@
+/* Левая панель: заметки, плагины, поиск и т.д. */
+.workspace-split.mod-left-split,
+.workspace-split.mod-left-split * {
+  font-size: 1em !important;
+}
+
+/* Правая панель: свойства, backlinks, outline и т.д. */
+.workspace-split.mod-right-split,
+.workspace-split.mod-right-split * {
+  font-size: 1em !important;
+}

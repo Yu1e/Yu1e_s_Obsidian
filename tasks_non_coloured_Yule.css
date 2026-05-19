@@ -1,0 +1,22 @@
+/*
+ * =========================================
+ * Кастомный стиль для ЗАДАЧ (Работает везде)
+ * =========================================
+*/
+.markdown-source-view.mod-cm6 .cm-line.task-list-item,
+.markdown-preview-view ul > li.task-list-item,
+.HyperMD-list-line[data-task],
+
+/* !!! НОВЫЙ СЕЛЕКТОР СПЕЦИАЛЬНО ДЛЯ SOURCE MODE !!! */
+.markdown-source-view:not(.mod-cm6) .cm-line .cm-task {
+
+  /* 1. Отменяем фиолетовый цвет */
+  color: var(--text-normal) !important;
+
+  /* 2. Изменение шрифта */
+  opacity: 0.55;
+  font-family: var(--font-monospace);
+  font-size: 0.9em;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}

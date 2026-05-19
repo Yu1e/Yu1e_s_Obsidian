@@ -1,0 +1,292 @@
+:root {
+    /* 8 гармоничных цветов для 8 уровней */
+    --folder-1-1: #5fa97c;   /* зелёный */
+    --folder-2-1: #6fd1b8;   /* мятный */
+    --folder-3-1: #3bbfc5;   /* бирюзовый */
+    --folder-4-1: #4f8cc9;   /* синий */
+    --folder-5-1: #7a8fa6;   /* синевато-серый */
+    --folder-6-1: #a97cbd;   /* фиолетовый */
+    --folder-7-1: #f2a65a;   /* оранжевый */
+    --folder-8-1: #e6c15f;   /* жёлтый */
+
+    --folder-1-2: #7fc99c;
+    --folder-2-2: #8fe1c8;
+    --folder-3-2: #5fd9e5;
+    --folder-4-2: #7faadc;
+    --folder-5-2: #9aafc6;
+    --folder-6-2: #c99fdc;
+    --folder-7-2: #f5c18a;
+    --folder-8-2: #f0d98c;
+
+    --folder-1-3: #a0e9bc;
+    --folder-2-3: #b0f1d8;
+    --folder-3-3: #7ff9ff;
+    --folder-4-3: #a0caff;
+    --folder-5-3: #bbcfd6;
+    --folder-6-3: #e0c0ff;
+    --folder-7-3: #f7d7b2;
+    --folder-8-3: #f7e7b2;
+
+    --folder-1-4: #c0ffd9;
+    --folder-2-4: #d0fff0;
+    --folder-3-4: #a0ffff;
+    --folder-4-4: #c0e0ff;
+    --folder-5-4: #dde0e6;
+    --folder-6-4: #f0e0ff;
+    --folder-7-4: #fbeed9;
+    --folder-8-4: #fcf3d9;
+
+    --folder-1-5: #e0fff0;
+    --folder-2-5: #e6fff7;
+    --folder-3-5: #c0ffff;
+    --folder-4-5: #e0f0ff;
+    --folder-5-5: #f0f2f5;
+    --folder-6-5: #f7f0ff;
+    --folder-7-5: #fef7eb;
+    --folder-8-5: #fef9e6;
+
+    --folder-1-6: #f0fff7;
+    --folder-2-6: #f5fffb;
+    --folder-3-6: #e0ffff;
+    --folder-4-6: #f0f7ff;
+    --folder-5-6: #f7f8fa;
+    --folder-6-6: #f9f5ff;
+    --folder-7-6: #fff8f0;
+    --folder-8-6: #fffbe9;
+
+    --folder-1-7: #f5fff9;
+    --folder-2-7: #f8fffd;
+    --folder-3-7: #f0ffff;
+    --folder-4-7: #f5f9ff;
+    --folder-5-7: #fafbfc;
+    --folder-6-7: #fbf8ff;
+    --folder-7-7: #fff9f3;
+    --folder-8-7: #fffceb;
+
+    --folder-1-8: #f8fffb;
+    --folder-2-8: #fbfffe;
+    --folder-3-8: #f5ffff;
+    --folder-4-8: #f8fbff;
+    --folder-5-8: #fcfdfe;
+    --folder-6-8: #fdfbff;
+    --folder-7-8: #fffaf6;
+    --folder-8-8: #fffdec;
+
+    --folder-rootfiles: #f5f5f5; /* фон для файлов в корне */
+    --folder-trash: #e57373;     /* выделение для Корзины */
+    --folder-trash-text: #fff;
+    --folder-text: #222;
+    --folder-hover: #00000013;
+    --folder-border: #2e344032;
+    --folder-radius: 10px;
+}
+
+/* Цвет текста и иконок */
+.nav-folder .nav-folder-title,
+.nav-folder .collapse-icon svg.svg-icon,
+.nav-file-title {
+    color: var(--folder-text) !important;
+}
+
+/* Убираем фон и скругления у заголовков и файлов */
+.nav-folder-title,
+.nav-file-title {
+    background: none !important;
+    border-radius: 0 !important;
+}
+
+/* Границы */
+.nav-folder .nav-folder-children {
+    border-left: 2px solid var(--folder-border) !important;
+}
+
+/* Hover */
+.nav-file-title:hover,
+.nav-file-title.is-active,
+.nav-folder-title:hover,
+.nav-folder-title.is-active {
+    background-color: var(--folder-hover) !important;
+}
+
+/* === 1 уровень: корневые папки === */
+.nav-folder:nth-of-type(1)  { background-color: var(--folder-1-1) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder:nth-of-type(2)  { background-color: var(--folder-2-1) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder:nth-of-type(3)  { background-color: var(--folder-3-1) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder:nth-of-type(4)  { background-color: var(--folder-4-1) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder:nth-of-type(5)  { background-color: var(--folder-5-1) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder:nth-of-type(6)  { background-color: var(--folder-6-1) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder:nth-of-type(7)  { background-color: var(--folder-7-1) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder:nth-of-type(8)  { background-color: var(--folder-8-1) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder:nth-of-type(9)  { background-color: var(--folder-7-1) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder:nth-of-type(10) { background-color: var(--folder-6-1) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder:nth-of-type(11) { background-color: var(--folder-5-1) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder:nth-of-type(12) { background-color: var(--folder-4-1) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder:nth-of-type(13) { background-color: var(--folder-3-1) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder:nth-of-type(14) { background-color: var(--folder-2-1) !important; border-radius: var(--folder-radius) !important; }
+
+/* === 2 уровень === */
+.nav-folder > .nav-folder-children > .nav-folder:nth-of-type(1)  { background-color: var(--folder-1-2) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder:nth-of-type(2)  { background-color: var(--folder-2-2) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder:nth-of-type(3)  { background-color: var(--folder-3-2) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder:nth-of-type(4)  { background-color: var(--folder-4-2) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder:nth-of-type(5)  { background-color: var(--folder-5-2) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder:nth-of-type(6)  { background-color: var(--folder-6-2) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder:nth-of-type(7)  { background-color: var(--folder-7-2) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder:nth-of-type(8)  { background-color: var(--folder-8-2) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder:nth-of-type(9)  { background-color: var(--folder-7-2) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder:nth-of-type(10) { background-color: var(--folder-6-2) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder:nth-of-type(11) { background-color: var(--folder-5-2) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder:nth-of-type(12) { background-color: var(--folder-4-2) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder:nth-of-type(13) { background-color: var(--folder-3-2) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder:nth-of-type(14) { background-color: var(--folder-2-2) !important; border-radius: var(--folder-radius) !important; }
+
+/* === 3 уровень === */
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(1)  { background-color: var(--folder-1-3) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(2)  { background-color: var(--folder-2-3) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(3)  { background-color: var(--folder-3-3) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(4)  { background-color: var(--folder-4-3) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(5)  { background-color: var(--folder-5-3) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(6)  { background-color: var(--folder-6-3) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(7)  { background-color: var(--folder-7-3) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(8)  { background-color: var(--folder-8-3) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(9)  { background-color: var(--folder-7-3) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(10) { background-color: var(--folder-6-3) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(11) { background-color: var(--folder-5-3) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(12) { background-color: var(--folder-4-3) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(13) { background-color: var(--folder-3-3) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(14) { background-color: var(--folder-2-3) !important; border-radius: var(--folder-radius) !important; }
+
+/* === 4 уровень === */
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(1)  { background-color: var(--folder-1-4) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(2)  { background-color: var(--folder-2-4) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(3)  { background-color: var(--folder-3-4) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(4)  { background-color: var(--folder-4-4) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(5)  { background-color: var(--folder-5-4) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(6)  { background-color: var(--folder-6-4) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(7)  { background-color: var(--folder-7-4) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(8)  { background-color: var(--folder-8-4) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(9)  { background-color: var(--folder-7-4) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(10) { background-color: var(--folder-6-4) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(11) { background-color: var(--folder-5-4) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(12) { background-color: var(--folder-4-4) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(13) { background-color: var(--folder-3-4) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(14) { background-color: var(--folder-2-4) !important; border-radius: var(--folder-radius) !important; }
+
+/* === 5 уровень === */
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(1)  { background-color: var(--folder-1-5) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(2)  { background-color: var(--folder-2-5) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(3)  { background-color: var(--folder-3-5) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(4)  { background-color: var(--folder-4-5) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(5)  { background-color: var(--folder-5-5) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(6)  { background-color: var(--folder-6-5) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(7)  { background-color: var(--folder-7-5) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(8)  { background-color: var(--folder-8-5) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(9)  { background-color: var(--folder-7-5) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(10) { background-color: var(--folder-6-5) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(11) { background-color: var(--folder-5-5) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(12) { background-color: var(--folder-4-5) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(13) { background-color: var(--folder-3-5) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(14) { background-color: var(--folder-2-5) !important; border-radius: var(--folder-radius) !important; }
+
+/* === 6 уровень === */
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(1)  { background-color: var(--folder-1-6) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(2)  { background-color: var(--folder-2-6) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(3)  { background-color: var(--folder-3-6) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(4)  { background-color: var(--folder-4-6) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(5)  { background-color: var(--folder-5-6) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(6)  { background-color: var(--folder-6-6) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(7)  { background-color: var(--folder-7-6) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(8)  { background-color: var(--folder-8-6) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(9)  { background-color: var(--folder-7-6) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(10) { background-color: var(--folder-6-6) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(11) { background-color: var(--folder-5-6) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(12) { background-color: var(--folder-4-6) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(13) { background-color: var(--folder-3-6) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(14) { background-color: var(--folder-2-6) !important; border-radius: var(--folder-radius) !important; }
+
+/* === 7 уровень === */
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(1)  { background-color: var(--folder-1-7) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(2)  { background-color: var(--folder-2-7) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(3)  { background-color: var(--folder-3-7) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(4)  { background-color: var(--folder-4-7) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(5)  { background-color: var(--folder-5-7) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(6)  { background-color: var(--folder-6-7) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(7)  { background-color: var(--folder-7-7) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(8)  { background-color: var(--folder-8-7) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(9)  { background-color: var(--folder-7-7) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(10) { background-color: var(--folder-6-7) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(11) { background-color: var(--folder-5-7) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(12) { background-color: var(--folder-4-7) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(13) { background-color: var(--folder-3-7) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(14) { background-color: var(--folder-2-7) !important; border-radius: var(--folder-radius) !important; }
+
+/* === 8 уровень === */
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(1)  { background-color: var(--folder-1-8) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(2)  { background-color: var(--folder-2-8) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(3)  { background-color: var(--folder-3-8) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(4)  { background-color: var(--folder-4-8) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(5)  { background-color: var(--folder-5-8) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(6)  { background-color: var(--folder-6-8) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(7)  { background-color: var(--folder-7-8) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(8)  { background-color: var(--folder-8-8) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(9)  { background-color: var(--folder-7-8) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(10) { background-color: var(--folder-6-8) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(11) { background-color: var(--folder-5-8) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(12) { background-color: var(--folder-4-8) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(13) { background-color: var(--folder-3-8) !important; border-radius: var(--folder-radius) !important; }
+.nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder:nth-of-type(14) { background-color: var(--folder-2-8) !important; border-radius: var(--folder-radius) !important; }
+
+/* Только вокруг текста файлов в корне */
+:root {
+    --rootfiles-bg-gradient: linear-gradient(
+        90deg,
+        rgba(90,90,90,0.18) 0%,
+        rgba(120,120,120,0.07) 15%,
+        rgba(120,120,120,0.07) 100%
+    );
+    --rootfiles-radius: 10px;
+    --rootfiles-text: #2a1111;
+    --rootfiles-pad-x: 24px;
+    --rootfiles-pad-y: 2px;
+}
+
+/* Фон только под текстом файла в корне */
+.nav-files-container .nav-file-title span,
+.nav-files-container .nav-file-title-content,
+.nav-files-container .nav-file-title-text {
+    background: var(--rootfiles-bg-gradient) !important;
+    border-radius: var(--rootfiles-radius) !important;
+    color: var(--rootfiles-text) !important;
+    display: inline-block !important;
+    padding: var(--rootfiles-pad-y) var(--rootfiles-pad-x) !important;
+    margin: 0 !important;
+    font-style: normal;
+    font-weight: 500;
+    transition: background 0.2s, color 0.2s;
+    min-width: 0;
+    text-align: left;
+    max-width: 100%;
+    white-space: pre;
+    align-self: flex-start !important;
+}
+
+/* Яркий красно-оранжевый градиент под курсором */
+:root {
+    --focus-gradient: linear-gradient(90deg, #e74c3c 0%, #ea6140 60%, #f2854c 100%);
+    --focus-radius: 8px;
+    --focus-text: #fff;
+}
+
+.nav-file-title:hover .nav-file-title-content,
+.nav-file-title.is-active .nav-file-title-content,
+.nav-folder-title:hover .nav-folder-title-content,
+.nav-folder-title.is-active .nav-folder-title-content {
+    background: var(--focus-gradient) !important;
+    color: var(--focus-text) !important;
+    border-radius: var(--focus-radius) !important;
+    padding: 2px 14px !important;
+    margin-left: 0 !important;
+    display: inline-block !important;
+    transition: background 0.2s, color 0.2s;
+}
+

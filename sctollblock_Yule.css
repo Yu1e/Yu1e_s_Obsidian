@@ -1,0 +1,7 @@
+.dvScroll .block-language-dataview {
+  display: block !important;
+  max-height: 300px; /* Фиксированная высота блока */
+  overflow-y: auto; /* Вертикальная прокрутка, если контент больше */
+  overflow-x: auto; /* Опционально: горизонтальная прокрутка для широких таблиц */
+  border: 1px solid var(--background-modifier-border); /* Опционально: рамка для визуального выделения */
+}

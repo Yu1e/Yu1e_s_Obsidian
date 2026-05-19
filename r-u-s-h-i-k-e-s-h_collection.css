@@ -1,0 +1,56 @@
+/* В НАСТРОЙКАХ - МЕНЮ С ПОДЦВЕТКОЙ АКТИВНОГО ПУНКТА */
+.vertical-tab-header-group-title {
+  color: var(--color-accent);
+}
+
+/* Красивая цитата, но там надо cite? https://github.com/r-u-s-h-i-k-e-s-h/Obsidian-CSS-Snippets/blob/Collection/Snippets/Blockquote%20styling%2002.md */
+*/
+
+/* Рамка с розами - красиво, но нужен отдельный сниппет, там, естественно, огромный код векторной картинки https://github.com/r-u-s-h-i-k-e-s-h/Obsidian-CSS-Snippets/blob/Collection/Snippets/Callout%20styling%20-%20Celtic%20callout%20border.md */
+
+/* Цветные выноски */
+
+
+/* Блок кода  https://github.com/r-u-s-h-i-k-e-s-h/Obsidian-CSS-Snippets/blob/Collection/Snippets/Code%20block%20styling%2001.md */
+
+/* reading mode */
+.markdown-rendered pre {
+  border: solid var(--color-accent);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-lm-only);
+}
+
+/* live preview */
+.cm-s-obsidian div.HyperMD-codeblock-begin-bg {
+  background: var(--code-background);
+  border-top: solid var(--color-accent);
+  /* stylelint-disable-next-line declaration-no-important */
+  border-top-right-radius: 8px !important;
+  /* stylelint-disable-next-line declaration-no-important */
+  border-top-left-radius: 8px !important;
+  margin-top: 8px;
+}
+
+.cm-s-obsidian div.HyperMD-codeblock-end-bg {
+  background: var(--code-background);
+  border-bottom: solid var(--color-accent);
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.cm-s-obsidian div.HyperMD-codeblock-bg {
+  border-right: solid var(--color-accent);
+  border-left: solid var(--color-accent);
+}
+
+
+
+/*  */
+/*  */
+/*  */
+/*  */
+
+
+
+
+

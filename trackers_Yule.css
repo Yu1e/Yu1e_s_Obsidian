@@ -1,0 +1,179 @@
+.tracker-bar-oneline-wrap {
+  background: transparent;
+  border-radius: 16px;
+  padding: 0;
+  display: inline-block;
+  min-width: 260px;
+  max-width: 100%;
+}
+.tracker-bar-oneline-title {
+  color: #333;
+  font-size: 1.08em;
+  font-weight: 600;
+  margin-bottom: 32px;
+  letter-spacing: 0.01em;
+  text-align: left;
+  opacity: 0.85;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tracker-bar-oneline-title-emoji {
+  font-size: 1.15em;
+  margin-right: 6px;
+  line-height: 1;
+  vertical-align: middle;
+  flex-shrink: 0;
+  width: 28px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tracker-bar-oneline-row {
+   display: inline-flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  margin-bottom: 8px;
+  width: auto;
+}
+.tracker-bar-oneline-emoji {
+  font-size: 1.15em;
+  margin: 0 4px;
+  line-height: 1;
+  vertical-align: middle;
+  flex-shrink: 0;
+  width: 28px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s;
+}
+.tracker-bar-oneline-emoji.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+.tracker-bar-oneline-emoji.show {
+  opacity: 1;
+}
+.tracker-bar-oneline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: nowrap;
+  min-width: 0;
+  width: auto;
+  max-width: none;
+  justify-content: flex-start;
+  cursor: pointer;
+}
+.tracker-bar-oneline-segment {
+  height: 18px;
+  width: 54px;
+  border-radius: 10px;
+  margin: 0 3px 6px 3px;
+  background: none;
+  position: relative;
+  box-shadow: 0 4px 24px #0006;
+  overflow: hidden;
+  border: none;
+  transition: opacity 0.2s, box-shadow 0.2s, filter 0.2s;
+  flex-shrink: 0;
+  opacity: 0;
+}
+.tracker-bar-oneline-segment.visible {
+  opacity: 1;
+}
+.tracker-bar-oneline-segment.partial {
+  opacity: 0.8;
+  border: 1.5px solid #00eaff88;
+}
+.tracker-bar-oneline-segment.empty {
+  opacity: 0.15;
+  background: #eee;
+}
+.tracker-bar-oneline-segment.last-partial {
+  filter: brightness(1.3) saturate(0.7) opacity(0.5);
+}
+.tracker-bar-oneline-segment.last {
+  border-radius: 18px !important;
+  box-shadow: 0 2px 8px #0002 !important;
+}
+.tracker-bar-oneline-segment.hide {
+  display: none !important;
+}
+.tracker-bar-oneline-ellipsis {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 18px;
+  margin: 0 3px 6px 3px;
+  background: transparent;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+  font-size: 1.3em;
+  font-family: inherit;
+  line-height: 1;
+  gap: 8px;
+}
+/* Новые разноцветные точки с видимой тенью */
+.tracker-bar-oneline-ellipsis-dot.dot1 {
+  width: 14px; height: 14px; background: #e5d1ff;
+  box-shadow: 0 4px 16px #888b;
+}
+.tracker-bar-oneline-ellipsis-dot.dot2 {
+  width: 13px; height: 13px; background: #c9d3fd;
+  box-shadow: 0 4px 16px #888b;
+}
+.tracker-bar-oneline-ellipsis-dot.dot3 {
+  width: 12px; height: 12px; background: #fde4ba;
+  box-shadow: 0 4px 16px #888b;
+}
+/* Чтобы тень была виднее, увеличьте: размер размытия (например, с 8px до 12px или 16px), смещение (например, с 2px до 4px), прозрачность (замените #bbb6 на более тёмный и менее прозрачный, например, #888b или #888e). */
+.tracker-bar-oneline-ellipsis.visible {
+  opacity: 1;
+}
+.tracker-bar-oneline-age,
+.tracker-bar-oneline-age-emoji {
+  transition: opacity 0.3s;
+}
+.tracker-bar-oneline-age.hide,
+.tracker-bar-oneline-age-emoji.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+.tracker-bar-oneline-age.show,
+.tracker-bar-oneline-age-emoji.show {
+  opacity: 1;
+}
+.tracker-bar-oneline-age {
+  color: #333;
+  font-size: 0.98em;
+  font-weight: 400;
+  margin-top: 11px;
+  margin-left: 2px;
+  letter-spacing: 0.01em;
+  text-align: left;
+  opacity: 0.85;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tracker-bar-oneline-age-emoji {
+  font-size: 1.15em;
+  margin-left: 6px;
+  line-height: 1;
+  vertical-align: middle;
+  flex-shrink: 0;
+  width: 28px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s;
+}

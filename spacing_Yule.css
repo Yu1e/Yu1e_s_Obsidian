@@ -1,0 +1,71 @@
+/***** БАЗОВЫЕ НАСТРОЙКИ ДЛЯ РЕЖИМА РЕДАКТИРОВАНИЯ *****/
+.cm-s-obsidian .cm-line {
+  line-height: 1.5 !important;
+  margin-bottom: 1.5em !important;
+  padding-top: 0.9em !important;
+}
+
+/***** НАСТРОЙКИ ДЛЯ РЕЖИМА ПРЕВЬЮ (ОБЫЧНЫЙ ТЕКСТ) *****/
+.markdown-preview-view p {
+  line-height: 1.5 !important;
+  margin-bottom: 1.5em !important;
+  padding-top: 0.9em !important;
+}
+
+/***** ПЛОТНЫЙ ТЕКСТ (CSS-класс tight-spacing на заметке) *****/
+
+/* Режим чтения (превью) */
+.markdown-preview-view .tight-spacing p {
+  line-height: 1 !important;
+  margin-bottom: 0em !important;
+  padding-top: 0em !important;
+}
+
+/* Режим редактирования (исходник) */
+.markdown-source-view.mod-cm6.tight-spacing .cm-line {
+  line-height: 0.9 !important;
+  margin-bottom: 0em !important;
+  padding-top: 0 !important; 
+}
+
+/***** ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ *****/
+body {
+  --font-smallest: 0.8em;
+  --font-smaller: 0.9em;
+  --font-small: 1em;
+  --font-ui-smaller: 14px;
+  --font-ui-small: 16px;
+  --font-ui-medium: 18px;
+  --font-ui-large: 20px;
+  --line-height-normal: 1.0;
+  --line-height-tight: 1.3;
+}
+
+/* Бледно-серый цвет для зачёркнутого текста */
+del, 
+s, 
+.cm-strikethrough, 
+.markdown-rendered del, 
+.markdown-rendered s, 
+.markdown-source-view.mod-cm6 .cm-strikethrough {
+    color: #aaa;
+    opacity: 0.8;
+}
+
+.theme-dark del,
+.theme-dark s,
+.theme-dark .cm-strikethrough {
+    color: #777 !important;
+}
+
+/* Доп. отступ для br в превью */
+.markdown-preview-view br {
+    content: '';
+    display: block;
+    margin-top: 10px;
+}
+
+/* Доп. отступ между строками в исходнике (кроме списков/кода/callout’ов) */
+.markdown-source-view :is(.cm-line:not(.HyperMD-list-line):not(.HyperMD-codeblock):not(.HyperMD-callout)) {
+   padding-top: 1em;
+}

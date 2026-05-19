@@ -1,0 +1,207 @@
+:root {
+	--star-1-color: #a23ea2;  /* красно-фиолетовый */
+	--star-2-color: #5e35b1;  /* сине-фиолетовый */
+	--star-3-color: #7c4dff;  /* яркий фиолетовый */
+	--star-4-color: #1976d2;  /* насыщенный синий */
+	--star-5-color: #039be5;  /* яркий голубой */
+	--star-6-color: #43a047;  /* яркий зелёный */
+	--star-7-color: #66e199;  /* ярко-зелёный */
+
+	--star-1-bg: #f8d6fa;
+	--star-2-bg: #e3d7fa;
+	--star-3-bg: #ede7f6;
+	--star-4-bg: #e3f2fd;
+	--star-5-bg: #e0f7fa;
+	--star-6-bg: #dffbef;
+    --star-7-bg: #ddf8e0;
+}
+
+/* LEVEL 1 — ✪ с ярким фоном */
+.markdown-reading-view ul > li > .list-bullet:after,
+.markdown-source-view.mod-cm6 .HyperMD-list-line-1 .list-bullet:after {
+	content: "✪";
+	font-size: 0.85em;
+	color: var(--star-1-color);
+	background: var(--star-1-bg);
+	border: none;
+	height: 1.3em;
+	width: 1.3em;
+	border-radius: 50%;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	font-family: inherit !important;
+	box-shadow: 0 1px 4px #a23ea222;
+}
+
+/* LEVEL 2 — ★ с фоном */
+.markdown-reading-view ul > li > ul > li > .list-bullet:after,
+.markdown-source-view.mod-cm6 .HyperMD-list-line-2 .list-bullet:after {
+	content: "★";
+	font-size: 0.85em;
+	color: var(--star-2-color);
+	background: var(--star-2-bg);
+	border: none;
+	height: 1.3em;
+	width: 1.3em;
+	border-radius: 50%;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	font-family: inherit !important;
+	box-shadow: 0 1px 4px #5e35b122;
+}
+
+/* LEVEL 3 — ✶ с фоном */
+.markdown-reading-view ul > li > ul > li > ul > li > .list-bullet:after,
+.markdown-source-view.mod-cm6 .HyperMD-list-line-3 .list-bullet:after {
+	content: "✶";
+	font-size: 0.85em;
+	color: var(--star-3-color);
+	background: var(--star-3-bg);
+	border: none;
+	height: 1.3em;
+	width: 1.3em;
+	border-radius: 50%;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	font-family: inherit !important;
+	box-shadow: 0 1px 4px #7c4dff22;
+}
+
+/* LEVEL 4 — ✦ с фоном */
+.markdown-reading-view
+	ul
+	> li
+	> ul
+	> li
+	> ul
+	> li
+	> ul
+	> li
+	> .list-bullet:after,
+.markdown-source-view.mod-cm6 .HyperMD-list-line-4 .list-bullet:after {
+	content: "✦";
+	font-size: 0.85em;
+	color: var(--star-4-color);
+	background: var(--star-4-bg);
+	border: none;
+	height: 1.3em;
+	width: 1.3em;
+	border-radius: 50%;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	font-family: inherit !important;
+	box-shadow: 0 1px 4px #1976d222;
+}
+
+/* LEVEL 5 — ☆ с фоном */
+.markdown-reading-view
+	ul
+	> li
+	> ul
+	> li
+	> ul
+	> li
+	> ul
+	> li
+	> ul
+	> li
+	> .list-bullet:after,
+.markdown-source-view.mod-cm6 .HyperMD-list-line-5 .list-bullet:after {
+	content: "☆";
+	font-size: 0.85em;
+	color: var(--star-5-color);
+	background: var(--star-5-bg);
+	border: none;
+	height: 1.3em;
+	width: 1.3em;
+	border-radius: 50%;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	font-family: inherit !important;
+	box-shadow: 0 1px 4px #039be522;
+}
+
+/* LEVEL 6 — ✩ с фоном */
+.markdown-reading-view
+	ul
+	> li
+	> ul
+	> li
+	> ul
+	> li
+	> ul
+	> li
+	> ul
+	> li
+	> ul
+	> li
+	> .list-bullet:after,
+.markdown-source-view.mod-cm6 .HyperMD-list-line-6 .list-bullet:after {
+	content: "✩";
+	font-size: 0.85em;
+	color: var(--star-6-color);
+	background: var(--star-6-bg);
+	border: none;
+	height: 1.3em;
+	width: 1.3em;
+	border-radius: 50%;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	font-family: inherit !important;
+	box-shadow: 0 1px 4px #43a04722;
+}
+
+/* LEVEL 7 — ✧ с фоном */
+.markdown-reading-view
+	ul
+	> li
+	> ul
+	> li
+	> ul
+	> li
+	> ul
+	> li
+	> ul
+	> li
+	> ul
+	> li
+	> ul
+	> li
+	> .list-bullet:after,
+.markdown-source-view.mod-cm6 .HyperMD-list-line-7 .list-bullet:after {
+	content: "✧";
+	font-size: 0.85em;
+	color: var(--star-7-color);
+	background: var(--star-7-bg);
+	border: none;
+	height: 1.3em;
+	width: 1.3em;
+	border-radius: 50%;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	font-family: inherit !important;
+	box-shadow: 0 1px 4px #00c85322;
+}
+
+.markdown-reading-view ul > li.task-list-item[data-task="+"] > .list-bullet:after,
+.markdown-reading-view ul > li.task-list-item[data-task="+"] > .list-bullet,
+.markdown-reading-view ul > li.task-list-item[data-task="+"] .list-bullet:after,
+.markdown-reading-view ul > li.task-list-item[data-task="+"] .list-bullet {
+    display: none !important;
+    content: none !important;
+    background: none !important;
+}

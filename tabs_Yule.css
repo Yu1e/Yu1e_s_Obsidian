@@ -1,0 +1,301 @@
+/*  Colors each tab based on first letter/number in the title
+    Optimized for Russian language frequency
+    Balanced palette of warm and cool colors with improved text readability
+ */
+
+/* Общие настройки для текста вкладок - добавляем тень для лучшей читаемости */
+.workspace-tab-header-inner {
+  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+}
+
+/* === MOST FREQUENT RUSSIAN LETTERS (Highest Priority) === */
+/* П - самая частотная */
+div[aria-label^="п" i], div[aria-label^="П" i] {
+    background-color: rgb(120, 220, 200); /* более светлый бирюзовый */
+}
+/* С */
+div[aria-label^="с" i], div[aria-label^="С" i] {
+    background-color: rgb(245, 155, 120); /* более светлый коралловый */
+}
+/* В */
+div[aria-label^="в" i], div[aria-label^="В" i] {
+    background-color: rgb(135, 230, 170); /* более светлый изумрудный */
+}
+/* Н */
+div[aria-label^="н" i], div[aria-label^="Н" i] {
+    background-color: rgb(230, 160, 195); /* более светлая фуксия */
+}
+/* О */
+div[aria-label^="о" i], div[aria-label^="О" i] {
+    background-color: rgb(255, 170, 120); /* более светлый мандариновый */
+}
+/* К */
+div[aria-label^="к" i], div[aria-label^="К" i] {
+    background-color: rgb(140, 230, 185); /* более светлый ментоловый */
+}
+/* Р */
+div[aria-label^="р" i], div[aria-label^="Р" i] {
+    background-color: rgb(225, 145, 120); /* более светлый терракотовый */
+}
+/* Д */
+div[aria-label^="д" i], div[aria-label^="Д" i] {
+    background-color: rgb(170, 165, 230); /* более светлый сиреневый */
+}
+/* З */
+div[aria-label^="з" i], div[aria-label^="З" i] {
+    background-color: rgb(240, 165, 155); /* более светлый лососевый */
+}
+/* М */
+div[aria-label^="м" i], div[aria-label^="М" i] {
+    background-color: rgb(120, 210, 245); /* более светлый небесно-голубой */
+}
+
+/* === MEDIUM FREQUENCY RUSSIAN LETTERS (Medium Priority) === */
+/* Т */
+div[aria-label^="т" i], div[aria-label^="Т" i] {
+    background-color: rgb(210, 150, 225); /* более светлая орхидея */
+}
+/* Б */
+div[aria-label^="б" i], div[aria-label^="Б" i] {
+    background-color: rgb(155, 230, 220); /* более светлая морская волна */
+}
+/* А */
+div[aria-label^="а" i], div[aria-label^="А" i] {
+    background-color: rgb(230, 165, 140); /* более светлый персиковый */
+}
+/* И */
+div[aria-label^="и" i], div[aria-label^="И" i] {
+    background-color: rgb(135, 215, 205); /* более светлый морской бриз */
+}
+/* У */
+div[aria-label^="у" i], div[aria-label^="У" i] {
+    background-color: rgb(220, 160, 195); /* более светлый лиловый */
+}
+/* Г */
+div[aria-label^="г" i], div[aria-label^="Г" i] {
+    background-color: rgb(165, 230, 135); /* более светлый киви */
+}
+/* Л */
+div[aria-label^="л" i], div[aria-label^="Л" i] {
+    background-color: rgb(240, 155, 175); /* более светлый вишневый */
+}
+/* Е */
+div[aria-label^="е" i], div[aria-label^="Е" i] {
+    background-color: rgb(130, 220, 180); /* более светлый малахитовый */
+}
+/* Ч */
+div[aria-label^="ч" i], div[aria-label^="Ч" i] {
+    background-color: rgb(225, 150, 200); /* более светлый сиреневый закат */
+}
+/* Я */
+div[aria-label^="я" i], div[aria-label^="Я" i] {
+    background-color: rgb(155, 200, 230); /* более светлый голубой лед */
+}
+
+/* === LESS FREQUENT RUSSIAN LETTERS (Lower Priority) === */
+div[aria-label^="ж" i], div[aria-label^="Ж" i] {
+    background-color: rgb(200, 170, 215); /* более светлый сиреневый */
+}
+div[aria-label^="х" i], div[aria-label^="Х" i] {
+    background-color: rgb(170, 220, 150); /* более светлая свежая зелень */
+}
+div[aria-label^="ф" i], div[aria-label^="Ф" i] {
+    background-color: rgb(220, 150, 170); /* более светлый малиновый */
+}
+div[aria-label^="ц" i], div[aria-label^="Ц" i] {
+    background-color: rgb(135, 225, 165); /* более светлый мятный */
+}
+div[aria-label^="ш" i], div[aria-label^="Ш" i] {
+    background-color: rgb(220, 160, 145); /* более светлый томатный */
+}
+div[aria-label^="щ" i], div[aria-label^="Щ" i] {
+    background-color: rgb(130, 205, 225); /* более светлый морской */
+}
+div[aria-label^="ъ" i], div[aria-label^="Ъ" i] {
+    background-color: rgb(235, 170, 155); /* более светлый абрикосовый */
+}
+div[aria-label^="ы" i], div[aria-label^="Ы" i] {
+    background-color: rgb(155, 195, 215); /* более светлый серо-голубой */
+}
+div[aria-label^="ь" i], div[aria-label^="Ь" i] {
+    background-color: rgb(220, 165, 185); /* более светлый фиалковый */
+}
+div[aria-label^="э" i], div[aria-label^="Э" i] {
+    background-color: rgb(145, 225, 195); /* более светлый аквамарин */
+}
+div[aria-label^="ю" i], div[aria-label^="Ю" i] {
+    background-color: rgb(225, 150, 135); /* более светлое красное дерево */
+}
+div[aria-label^="ё" i], div[aria-label^="Ё" i] {
+    background-color: rgb(165, 195, 230); /* более светлый лазурный */
+}
+
+/* === ENGLISH ALPHABET (Lower Priority) === */
+div[aria-label^="a" i], div[aria-label^="A" i] {
+    background-color: rgb(190, 175, 215); /* более светлый лавандовый */
+}
+div[aria-label^="b" i], div[aria-label^="B" i] {
+    background-color: rgb(150, 215, 190); /* более светлый эвкалиптовый */
+}
+div[aria-label^="c" i], div[aria-label^="C" i] {
+    background-color: rgb(195, 160, 190); /* более светлый сиреневый */
+}
+div[aria-label^="d" i], div[aria-label^="D" i] {
+    background-color: rgb(165, 205, 185); /* более светлый мягкий зеленый */
+}
+div[aria-label^="e" i], div[aria-label^="E" i] {
+    background-color: rgb(190, 170, 200); /* более светлый аметистовый */
+}
+div[aria-label^="f" i], div[aria-label^="F" i] {
+    background-color: rgb(155, 200, 175); /* более светлый океанический */
+}
+div[aria-label^="g" i], div[aria-label^="G" i] {
+    background-color: rgb(200, 165, 195); /* более светлый фиолетовый */
+}
+div[aria-label^="h" i], div[aria-label^="H" i] {
+    background-color: rgb(170, 190, 215); /* более светлый небесный */
+}
+div[aria-label^="i" i], div[aria-label^="I" i] {
+    background-color: rgb(195, 175, 205); /* более светлый сиреневый */
+}
+div[aria-label^="j" i], div[aria-label^="J" i] {
+    background-color: rgb(170, 215, 185); /* более светлая зеленая мята */
+}
+div[aria-label^="k" i], div[aria-label^="K" i] {
+    background-color: rgb(205, 170, 190); /* более светлая пыльная роза */
+}
+div[aria-label^="l" i], div[aria-label^="L" i] {
+    background-color: rgb(175, 185, 215); /* более светлый лавандовый */
+}
+div[aria-label^="m" i], div[aria-label^="M" i] {
+    background-color: rgb(195, 170, 195); /* более светлая орхидея */
+}
+div[aria-label^="n" i], div[aria-label^="N" i] {
+    background-color: rgb(170, 205, 195); /* более светлый мятно-зеленый */
+}
+div[aria-label^="o" i], div[aria-label^="O" i] {
+    background-color: rgb(190, 180, 205); /* более светлая лаванда */
+}
+div[aria-label^="p" i], div[aria-label^="P" i] {
+    background-color: rgb(165, 205, 210); /* более светлый туманно-голубой */
+}
+div[aria-label^="q" i], div[aria-label^="Q" i] {
+    background-color: rgb(195, 170, 195); /* более светлый лиловый */
+}
+div[aria-label^="r" i], div[aria-label^="R" i] {
+    background-color: rgb(175, 195, 180); /* более светлый мягкий зеленый */
+}
+div[aria-label^="s" i], div[aria-label^="S" i] {
+    background-color: rgb(195, 170, 190); /* более светлая орхидея */
+}
+div[aria-label^="t" i], div[aria-label^="T" i] {
+    background-color: rgb(175, 210, 185); /* более светлый мятный */
+}
+div[aria-label^="u" i], div[aria-label^="U" i] {
+    background-color: rgb(200, 170, 195); /* более светлый аметистовый */
+}
+div[aria-label^="v" i], div[aria-label^="V" i] {
+    background-color: rgb(170, 205, 205); /* более светлый аквамарин */
+}
+div[aria-label^="w" i], div[aria-label^="W" i] {
+    background-color: rgb(190, 170, 200); /* более светлый лиловый */
+}
+div[aria-label^="x" i], div[aria-label^="X" i] {
+    background-color: rgb(165, 210, 180); /* более светлый нефритовый */
+}
+div[aria-label^="y" i], div[aria-label^="Y" i] {
+    background-color: rgb(185, 170, 200); /* более светлый пурпурный */
+}
+div[aria-label^="z" i], div[aria-label^="Z" i] {
+    background-color: rgb(170, 185, 215); /* более светлый лавандовый */
+}
+
+/* === DIGITS FIRST CHARACTER (Lowest Priority) === */
+div[aria-label^="0"] {
+    background-color: rgb(170, 195, 215); /* более светлый циан */
+}
+div[aria-label^="1"] {
+    background-color: rgb(180, 175, 210); /* более светлый лавандовый */
+}
+div[aria-label^="2"] {
+    background-color: rgb(175, 200, 205); /* более светлый серо-голубой */
+}
+div[aria-label^="3"] {
+    background-color: rgb(185, 180, 200); /* более светлый лиловый */
+}
+div[aria-label^="4"] {
+    background-color: rgb(175, 200, 215); /* более светлый светло-синий */
+}
+div[aria-label^="5"] {
+    background-color: rgb(180, 175, 205); /* более светлый лавандово-синий */
+}
+div[aria-label^="6"] {
+    background-color: rgb(175, 200, 180); /* более светлый нефритовый */
+}
+div[aria-label^="7"] {
+    background-color: rgb(175, 180, 205); /* более светлый сиреневый */
+}
+div[aria-label^="8"] {
+    background-color: rgb(180, 205, 200); /* более светлый бирюзовый */
+}
+div[aria-label^="9"] {
+    background-color: rgb(180, 175, 205); /* более светлый лавандовый */
+}
+
+/* === SPECIAL SYMBOLS === */
+div[aria-label^="."],
+div[aria-label^=","],
+div[aria-label^="!"],
+div[aria-label^="?"],
+div[aria-label^="@"],
+div[aria-label^="#"],
+div[aria-label^="$"],
+div[aria-label^="%"],
+div[aria-label^="^"],
+div[aria-label^="&"],
+div[aria-label^="*"],
+div[aria-label^="("],
+div[aria-label^=")"],
+div[aria-label^="-"],
+div[aria-label^="+"],
+div[aria-label^="="],
+div[aria-label^="["],
+div[aria-label^="]"],
+div[aria-label^="{"],
+div[aria-label^="}"],
+div[aria-label^="|"],
+div[aria-label^="/"],
+div[aria-label^="\\"],
+div[aria-label^="<"],
+div[aria-label^=">"],
+div[aria-label^="_"] {
+    background-color: rgb(175, 185, 205); /* более светлая голубая сталь */
+}
+
+.theme-light {  
+  --tab-text-color: #000000;
+  --tab-text-color-active: #ffffff;
+  --tab-text-color-focused: #000000;
+  --tab-text-color-focused-active: #ffffff;
+  --tab-text-color-focused-highlighted: #ffffff;
+  --tab-text-color-focused-active-current: #ffffff;
+}
+
+.theme-dark {  
+  --tab-text-color: #000000;
+  --tab-text-color-active: #ffffff;
+  --tab-text-color-focused: #000000;
+  --tab-text-color-focused-active: #ffffff;
+  --tab-text-color-focused-highlighted: #ffffff;
+  --tab-text-color-focused-active-current: #ffffff;
+}
+
+body {   
+  --tab-background-active: #008076 !important;
+  --tab-outline-color: #222222 !important;
+  --tab-font-size: 0.90em !important;
+}
+
+.workspace-tab-header.is-active {
+  font-weight: 1000;
+}

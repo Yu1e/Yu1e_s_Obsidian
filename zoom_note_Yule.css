@@ -1,0 +1,35 @@
+/* Масштаб 60% */
+.markdown-preview-view.zoom60 .markdown-preview-sizer,
+.markdown-source-view.mod-cm6.zoom60 .cm-scroller {
+    zoom: 0.6;
+}
+
+/* Масштаб 75% */
+.markdown-preview-view.zoom75 .markdown-preview-sizer,
+.markdown-source-view.mod-cm6.zoom75 .cm-scroller {
+    zoom: 0.75;
+}
+
+/* Масштаб 90% */
+.markdown-preview-view.zoom90 .markdown-preview-sizer,
+.markdown-source-view.mod-cm6.zoom90 .cm-scroller {
+    zoom: 0.9;
+}
+
+/* Масштаб 120% */
+.markdown-preview-view.zoom120 .markdown-preview-sizer,
+.markdown-source-view.mod-cm6.zoom120 .cm-scroller {
+    zoom: 1.2;
+}
+
+/* Масштаб 140% */
+.markdown-preview-view.zoom140 .markdown-preview-sizer,
+.markdown-source-view.mod-cm6.zoom140 .cm-scroller {
+    zoom: 1.4;
+}
+
+/* Масштаб 160% */
+.markdown-preview-view.zoom160 .markdown-preview-sizer,
+.markdown-source-view.mod-cm6.zoom160 .cm-scroller {
+    zoom: 1.6;
+}
