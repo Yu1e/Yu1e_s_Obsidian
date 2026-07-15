@@ -19,40 +19,27 @@ ink-rating:
 <%*
 // Шаблон для коллекции чернил. В настройках плагина Templater установлено применение этого шаблона в папке Чайник_с_чернилками/Чернила_коллекция
 
-const inkBrand = await tp.system.prompt("Бренд");
-const inkName = await tp.system.prompt("Название");
+const inkBrand = ((await tp.system.prompt("Бренд")) ?? "").trim();
+const inkName = ((await tp.system.prompt("Название")) ?? "").trim();
 
-if (inkBrand && inkBrand.trim() && inkName && inkName.trim()) {
-    const cleanBrand = inkBrand.trim();
-    const cleanName = inkName.trim();
-    const fileName = cleanBrand + " " + cleanName;
-    
-    // 1. Переименовываем файл (Бренд_Название)
-    await tp.file.rename(fileName);
-    
-    // 2. Добавляем ink-brand и ink-name в frontmatter вручную, не затирая контент
-    const file = app.workspace.getActiveFile();
-    const content = await app.vault.read(file);
-    
-    let newContent;
-    // Проверяем есть ли уже frontmatter
-    if (content.startsWith('---')) {
-        const endFrontmatter = content.indexOf('---', 3);
-        if (endFrontmatter > 0) {
-            const frontmatter = content.substring(3, endFrontmatter);
-            const rest = content.substring(endFrontmatter + 3);
-            // Добавляем свойства в frontmatter
-            newContent = '---\n' + frontmatter.trim() + '\nink-brand: ' + cleanBrand + '\nink-name: ' + cleanName + '\n---' + rest;
-        } else {
-            newContent = content;
-        }
-    } else {
-        // Если нет frontmatter, создаём его
-        newContent = '---\nink-brand: ' + cleanBrand + '\nink-name: ' + cleanName + '\n---\n' + content;
-    }
-    
-    await app.vault.modify(file, newContent);
+if (inkBrand && inkName) {
+    // 1. Переименовываем файл (Бренд Название)
+    await tp.file.rename(inkBrand + " " + inkName);
 }
+
+// 2. Заполняем ink-brand и ink-name через официальный хук Templater.
+// Если писать в properties сразу (через app.vault.modify), возникает race condition:
+// Templater сам ещё не закончил формировать итоговую заметку и в конце перезаписывает
+// файл своей версией — наша ручная правка терялась (или наоборот перекрывала всё,
+// в зависимости от момента). on_all_templates_executed гарантированно срабатывает
+// ПОСЛЕ того как Templater полностью закончил, поэтому конфликта больше нет.
+tp.hooks.on_all_templates_executed(async () => {
+    const file = tp.file.find_tfile(tp.file.path(true));
+    await app.fileManager.processFrontMatter(file, (fm) => {
+        fm["ink-brand"] = inkBrand;
+        fm["ink-name"] = inkName;
+    });
+});
 
 // 3. Переключение в режим Source и фокус
 setTimeout(() => {
@@ -73,6 +60,7 @@ setTimeout(() => {
     }
 }, 300);
 -%>
+
 ```dataviewjs
 const c = dv.current();
 const safeStr = (val, def = "—") => val === undefined || val === null || val === "" ? def : String(val).trim();
@@ -173,7 +161,6 @@ if (inkImage && inkImage !== "—") {
     dv.container.innerHTML += `<div style="margin:16px 0;text-align:center"><img src="${inkImage.trim()}" alt="${safeStr(c["ink-name"])}" style="width:800px;max-width:100%;height:auto;object-fit:contain"></div>`;
 }
 ```
-
 > [!quote|no-icon]- 🛒 Покупка
 > ```dataviewjs
 > const ruMonths = ["янв","февр","март","апр","мая","июня","июля","авг","сент","окт","ноя","дек"];
@@ -260,7 +247,6 @@ if (inkImage && inkImage !== "—") {
 >     });
 > }
 > ```
-
 ```dataviewjs
 const ruMonths = ["янв","февр","март","апр","мая","июня","июля","авг","сент","окт","ноя","дек"];
 const formatDate = (val) => {
@@ -292,8 +278,8 @@ if(c["ink-rating"]){
 
 if(rows.length) dv.paragraph(`<table style="width:100%;border-collapse:collapse;font-size:0.95em">${rows.join("")}</table>`)
 ```
-
 ##### Дополнения
+
 > [!attention]- Остальные свойства
 > <sup>нет / слабо / сильно! Прочерк = ещё нет данных</sup>
 > - [ink-sheen:: ]
@@ -304,24 +290,17 @@ if(rows.length) dv.paragraph(`<table style="width:100%;border-collapse:collapse;
 > - [ink-feathering:: ]
 
 > [!attention] Критично, важно:
-> (ink-txt1::  )
+> (ink-txt1:: )
 
 > [!note] Мои наблюдения и замечания
-> (ink-txt2::  )
+> (ink-txt2:: )
 
-> [!abstract] Описание от ИИ
-> (ink-txt3::  )
+> [!abstract] Описание от ИИ или из интернета
+> (ink-txt3:: <% tp.file.cursor(1) %>)
 
 > [!tip] Этимология от ИИ
-> (ink-txt4::  )
-
+> (ink-txt4:: )
 ##### Ссылки
-%% [Ссылка на заказ]()
-[Карточка товара]()
-[Обзор 1]()
-[Обзор 2]() %%
-
+%% [Ссылка на заказ]() இ [Карточка товара]() இ [Обзор 1]() இ [Обзор 2]() %%
 ##### Больше фото
-%% [1]()
-[2]()
-[3]() %%
+%% [1]() [2]() [3]() %%
